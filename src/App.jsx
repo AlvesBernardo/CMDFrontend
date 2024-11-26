@@ -1,12 +1,13 @@
-import './css/index.css'
-import Dashboard from "./screens/Dashboard/Dashboard.jsx";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import SignIn from "./screens/SignIn/SignIn.jsx";
 
 function App() {
-
   return (
-  <div>
-    <Dashboard/>
-  </div>
+      <BrowserRouter>
+        <Routes>
+          <Route index path="/" element={<SignIn />} />
+        </Routes>
+      </BrowserRouter>
   )
 }
 
