@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import '../../css/screens/_questionnaire.scss';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import Button from "../../components/button";
+import "../../css/screens/_questionnaire.scss";
+import { useNavigate } from "react-router-dom";
+import { GoArrowRight, GoArrowLeft } from "react-icons/go";
+import { CiGrid42 } from "react-icons/ci";
 
-function questionnaire() {
+
+function Questionnaire() {
   const [questions, setQuestions] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/questions.json') // Path to the questions JSON file
+    fetch("/questions.json")
       .then((response) => response.json())
       .then((data) => setQuestions(data));
   }, []);
@@ -32,22 +36,25 @@ function questionnaire() {
   };
 
   const handleSubmit = () => {
-    fetch('/submit-answers', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    fetch("/submit-answers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(questions),
-    }).then(() => alert('Your answers have been submitted successfully!'));
+    }).then(() => alert("Your answers have been submitted successfully!"));
   };
 
   return (
-    <div className="questionnaire-container" style={{ position: 'relative' }}>
+    <div className="questionnaire-container" style={{ position: "relative" }}>
       {/* Dashboard Button */}
-      <button
-        className="dashboard-button"
-        onClick={() => navigate('/dashboard')}
-      >
-        Dashboard
-      </button>
+      <Button
+      text="Dashboard"
+      onClick={() => navigate("/dashboard")}
+      type="secondary"
+      icon={CiGrid42} // Pass the icon
+      iconPosition="left" // Position the icon on the left
+      className="dashboard-button"
+    />
+
 
       {questions.length > 0 && (
         <>
@@ -56,7 +63,7 @@ function questionnaire() {
           </div>
           <div className="answer-box">
             <textarea
-              value={questions[currentStep].answer || ''}
+              value={questions[currentStep].answer || ""}
               onChange={handleAnswerChange}
               placeholder="Enter your answer here"
             ></textarea>
@@ -67,21 +74,29 @@ function questionnaire() {
             </p>
           </div>
           <div className="navigation-buttons">
-            <button
-              className="prev-button"
+            <Button
+              text="Previous"
               onClick={handlePrevious}
+              type="secondary"
               disabled={currentStep === 0}
-            >
-              &lt;- Previous
-            </button>
+              icon={GoArrowLeft}
+              iconPosition="left"
+            />
             {currentStep < questions.length - 1 ? (
-              <button className="next-button" onClick={handleNext}>
-                Next -&gt;
-              </button>
+              <Button
+                text="Next"
+                onClick={handleNext}
+                type="primary"
+                icon={GoArrowRight}
+                iconPosition="right"
+                className="large-next-button"
+              />
             ) : (
-              <button className="submit-button" onClick={handleSubmit}>
-                Submit
-              </button>
+              <Button
+                text="Submit"
+                onClick={handleSubmit}
+                type="primary"
+              />
             )}
           </div>
         </>
@@ -90,4 +105,4 @@ function questionnaire() {
   );
 }
 
-export default questionnaire;
+export default Questionnaire;

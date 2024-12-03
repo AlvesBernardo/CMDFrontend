@@ -41,8 +41,9 @@ textarea {
   border: none;
   width: 100%;
   height: 120px;
+  
   // border: 2px solid #ccc;
-  // border-radius: 5px;
+  // border-radius: 50px;
   padding: 10px;
   font-size: 1rem;
   margin: 10px 0;
@@ -108,12 +109,23 @@ textarea {
     background-color: red !important; /* This should visibly apply red background */
   }
   
-
   .dashboard-button {
-    background-color: #ffff;
-    border: 3px solid #004aad;
-    color: #004aad;
-}
-
+    position: absolute; /* Make it absolute relative to the container */
+    top: 20px; /* Adjust vertical position */
+    right: 20px; /* Adjust horizontal position */
+    background-color: #ffffff; /* White background */
+    border: 2px solid #004aad; /* Blue border */
+    color: #004aad; /* Blue text */
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center; /* Align the icon and text vertically */
+  
+    &:hover {
+      background-color: #e4ecf4; /* Light blue on hover */
+    }
+  }
   
 }
