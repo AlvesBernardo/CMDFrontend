@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import '../../css/screens/_questionary.scss';
+import '../../css/screens/_questionnaire.scss';
+import { useNavigate } from 'react-router-dom';
 
-function Questionary() {
+function questionnaire() {
   const [questions, setQuestions] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('/questions.json') // Path to the questions JSON file
@@ -38,7 +40,15 @@ function Questionary() {
   };
 
   return (
-    <div className="questionary-container">
+    <div className="questionnaire-container" style={{ position: 'relative' }}>
+      {/* Dashboard Button */}
+      <button
+        className="dashboard-button"
+        onClick={() => navigate('/dashboard')}
+      >
+        Dashboard
+      </button>
+
       {questions.length > 0 && (
         <>
           <div className="question-box">
@@ -80,4 +90,4 @@ function Questionary() {
   );
 }
 
-export default Questionary;
+export default questionnaire;

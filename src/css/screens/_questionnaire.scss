@@ -1,4 +1,4 @@
-.questionary-container {
+.questionnaire-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -103,4 +103,17 @@ textarea {
   .submit-button {
     background-color: #28a745;
   }
+
+  .test-button {
+    background-color: red !important; /* This should visibly apply red background */
+  }
+  
+
+  .dashboard-button {
+    background-color: #ffff;
+    border: 3px solid #004aad;
+    color: #004aad;
+}
+
+  
 }
