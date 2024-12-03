@@ -5,16 +5,22 @@ import { useNavigate } from "react-router-dom";
 import { GoArrowRight, GoArrowLeft } from "react-icons/go";
 import { CiGrid42 } from "react-icons/ci";
 
-
 function Questionnaire() {
   const [questions, setQuestions] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
+  const [user, setUser] = useState({ name: "", email: "" }); // State for user data
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Fetch questions
     fetch("/questions.json")
       .then((response) => response.json())
       .then((data) => setQuestions(data));
+
+    // Fetch user data
+    fetch("/user.json")
+      .then((response) => response.json())
+      .then((data) => setUser(data));
   }, []);
 
   const handleNext = () => {
@@ -43,18 +49,36 @@ function Questionnaire() {
     }).then(() => alert("Your answers have been submitted successfully!"));
   };
 
+  const getInitials = (name) => {
+    const initials = name
+      .split(" ")
+      .map((n) => n[0])
+      .join("");
+    return initials.toUpperCase();
+  };
+
   return (
     <div className="questionnaire-container" style={{ position: "relative" }}>
+      {/* Top-left User Information */}
+      <div className="user-info">
+        <div className="user-initials">{getInitials(user.name)}</div>
+        <div className="user-details">
+          <div className="fullname">{user.name}</div>
+          <div className="email">{user.email}</div>
+        </div>
+      </div>
+
+
+
       {/* Dashboard Button */}
       <Button
-      text="Dashboard"
-      onClick={() => navigate("/dashboard")}
-      type="secondary"
-      icon={CiGrid42} // Pass the icon
-      iconPosition="left" // Position the icon on the left
-      className="dashboard-button"
-    />
-
+        text="Dashboard"
+        onClick={() => navigate("/dashboard")}
+        type="secondary"
+        icon={CiGrid42}
+        iconPosition="left"
+        className="dashboard-button"
+      />
 
       {questions.length > 0 && (
         <>
@@ -92,11 +116,7 @@ function Questionnaire() {
                 className="large-next-button"
               />
             ) : (
-              <Button
-                text="Submit"
-                onClick={handleSubmit}
-                type="primary"
-              />
+              <Button text="Submit" onClick={handleSubmit} type="primary" />
             )}
           </div>
         </>

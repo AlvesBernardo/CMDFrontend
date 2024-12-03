@@ -60,6 +60,7 @@ textarea {
   font-size: 1rem;
   font-weight: bold;
   color: #004aad;
+  margin-bottom: -20px;
 }
 
 .navigation-buttons {
@@ -128,4 +129,40 @@ textarea {
     }
   }
   
+}
+
+.user-info {
+  position: absolute;
+  top: 20px; /* Adjust as needed */
+  left: 20px; /* Adjust as needed */
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Increase spacing between initials and details */
+
+  .user-initials {
+    background-color: #004aad;
+    color: white;
+    font-size: 1.5rem; /* Bigger font size for initials */
+    // font-weight: bold;
+    border-radius: 50%;
+    width: 60px; /* Bigger circle */
+    height: 60px; /* Bigger circle */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .user-details {
+    font-size: 1.1rem; /* Bigger font size for details */
+
+    .fullname {
+      font-weight: bold;
+      font-size: 1.3rem; /* Bigger font size for name */
+    }
+
+    .email {
+      color: gray;
+      font-size: 1.1rem; /* Bigger font size for email */
+    }
+  }
 }
