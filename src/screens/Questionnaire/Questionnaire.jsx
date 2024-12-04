@@ -8,7 +8,7 @@ import { CiGrid42 } from "react-icons/ci";
 function Questionnaire() {
   const [questions, setQuestions] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
-  const [user, setUser] = useState({ name: "", email: "" }); // State for user data
+  const [user, setUser] = useState({ name: "", email: "" });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,7 +59,8 @@ function Questionnaire() {
 
   return (
     <div className="questionnaire-container" style={{ position: "relative" }}>
-      {/* Top-left User Information */}
+      
+      {/* Top-left user information */}
       <div className="user-info">
         <div className="user-initials">{getInitials(user.name)}</div>
         <div className="user-details">
@@ -68,9 +69,7 @@ function Questionnaire() {
         </div>
       </div>
 
-
-
-      {/* Dashboard Button */}
+      {/* Dashboard button */}
       <Button
         text="Dashboard"
         onClick={() => navigate("/dashboard")}

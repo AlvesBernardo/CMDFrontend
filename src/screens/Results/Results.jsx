@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "../../css/screens/_results.scss"; // Ensure this file is correctly placed
-import Button from "../../components/questionnaireButton"; // Assuming you have this component
+import "../../css/screens/_results.scss";
+import Button from "../../components/questionnaireButton";
 import { useNavigate } from "react-router-dom";
 import { CiGrid42 } from "react-icons/ci";
 
@@ -44,7 +44,7 @@ function Results() {
 
   return (
     <div className="results-container">
-      {/* User Info */}
+      {/* User info */}
       <div className="user-info">
         <div className="user-initials">{getInitials(user.name)}</div>
         <div className="user-details">
@@ -53,7 +53,7 @@ function Results() {
         </div>
       </div>
 
-      {/* Dashboard Button */}
+      {/* Dashboard button */}
       <Button
         text="Dashboard"
         onClick={() => navigate("/dashboard")}
@@ -63,7 +63,7 @@ function Results() {
         className="dashboard-button"
       />
 
-      {/* Results List */}
+      {/* Results list */}
       <div className="results-list">
         {results.map((result, index) => (
           <div key={index} className="result-item">
