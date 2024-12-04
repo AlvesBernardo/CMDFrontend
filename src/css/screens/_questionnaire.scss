@@ -156,12 +156,13 @@ textarea {
     font-size: 1.1rem; /* Bigger font size for details */
 
     .fullname {
-      font-weight: bold;
+      // font-weight: bold;
       font-size: 1.3rem; /* Bigger font size for name */
+      color:#1763AD;
     }
 
     .email {
-      color: gray;
+      color: #1763AD;
       font-size: 1.1rem; /* Bigger font size for email */
     }
   }

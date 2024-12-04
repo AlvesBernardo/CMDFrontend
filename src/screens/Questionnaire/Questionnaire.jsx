@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Button from "../../components/button";
+import Button from "../../components/questionnaireButton";
 import "../../css/screens/_questionnaire.scss";
 import { useNavigate } from "react-router-dom";
 import { GoArrowRight, GoArrowLeft } from "react-icons/go";

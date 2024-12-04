@@ -1,5 +1,5 @@
 import React from "react";
-import "./../css/components/_button.scss";
+import "./../css/components/_questionnaireButton.scss";
 import { GoArrowRight, GoArrowLeft } from "react-icons/go";
 
 const Button = ({
