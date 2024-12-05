@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #E4ECF4;
+  background-color: #e4ecf4;
   gap: 20px;
 }
 
@@ -12,7 +12,7 @@
   width: 500px;
   padding: 15px;
   border-radius: 10px;
-  background-color: #004aad;
+  background-color: #004aad; /* Blue background */
   color: white;
   text-align: center;
   position: relative;
@@ -31,7 +31,7 @@
   padding-top: 40px;
   border: 3px solid #004aad;
   border-radius: 10px;
-  background-color:  #E4ECF4;
+  background-color: #e4ecf4;
 }
 
 textarea {
@@ -94,32 +94,91 @@ textarea {
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
-
     width: 370px;
   }
 
   .submit-button {
     background-color: #28a745;
   }
+}
 
-  .dashboard-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #ffffff;
-    border: 2px solid #004aad;
-    color: #004aad;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-  
-    &:hover {
-      background-color: #e4ecf4;
-    }
-  }
+.drag-and-drop-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 500px; /* Matches the text area */
+  height: 300px; /* Matches the text area */
+  border: 3px solid #004aad;
+  border-radius: 10px;
+  background-color: #e4ecf4;
+  margin: 0 auto; /* Center the container horizontally */
+  padding: 20px;
+  gap: 20px; /* Space between the sections */
+}
+
+.options,
+.choices {
+  flex: 1;
+  max-width: 40%; /* Reduce width of each section */
+  text-align: center;
+}
+
+.options h3,
+.choices h3 {
+  margin-bottom: 15px;
+}
+
+.draggable-item {
+  padding: 10px;
+  background-color: #004aad;
+  color: white;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+  cursor: grab;
+  transition: transform 0.2s ease;
+}
+
+.draggable-item:active {
+  opacity: 1; /* Fully visible while dragging */
+}
+
+.drop-zone {
+  padding: 20px;
+  background-color: #e4ecf4;
+  border: 2px dashed #004aad;
+  border-radius: 5px;
+  min-height: 50px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 100%; /* Match height of the container */
+}
+
+.drop-zone.filled {
+  border: 2px solid #28a745;
+}
+
+.dropped-item {
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clear-choice {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: bold;
+  margin-left: 10px;
+  cursor: pointer;
 }
 
 .user-info {
@@ -147,77 +206,37 @@ textarea {
 
     .fullname {
       font-size: 1.3rem;
-      color:#1763AD;
+      color: #1763ad;
     }
 
     .email {
-      color: #1763AD;
+      color: #1763ad;
       font-size: 1.1rem;
     }
   }
 }
 
-.drag-and-drop-container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  gap: 20px;
-}
-
-.options,
-.choices {
-  width: 45%;
-}
-
-.options h3,
-.choices h3 {
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.draggable-item {
-  padding: 10px;
-  background-color: #004aad;
-  color: white;
+.dashboard-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  border: 2px solid #004aad;
+  color: #004aad;
+  padding: 10px 20px;
   border-radius: 5px;
-  margin-bottom: 10px;
-  text-align: center;
-  cursor: grab;
-}
-
-.drop-zone {
-  padding: 20px;
-  background-color: #e4ecf4;
-  border: 2px dashed #004aad;
-  border-radius: 5px;
-  min-height: 50px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.drop-zone.filled {
-  border: 2px solid #28a745;
-}
-
-.dropped-item {
-  padding: 10px;
-  background-color: #28a745;
-  color: white;
-  border-radius: 5px;
-  text-align: center;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.clear-choice {
-  background: none;
-  border: none;
-  color: white;
-  font-weight: bold;
-  margin-left: 10px;
+  font-size: 1rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background-color: #e4ecf4;
+  }
+}
+
+.dashboard-button svg {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
 }
