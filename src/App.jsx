@@ -1,6 +1,11 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import SignIn from "./screens/SignIn/SignIn.jsx";
 import StudentDashboard from "./screens/Dashboard/StudentDashboard.jsx";
+import Dashboard from "./screens/Dashboard/Dashboard.jsx";
+import SignUp from "./screens/SignUp/SignUp.jsx";
+import AdminDashboard from "./screens/Dashboard/AdminDashboard.jsx";
+import Questionnaire from "./screens/Questionnaire/Questionnaire.jsx";
+import Results from "./screens/Results/Results.jsx";
 
 function App() {
   return (
@@ -8,6 +13,12 @@ function App() {
         <Routes>
           <Route index path="/" element={<SignIn />} />
           <Route index path="/studentDashboard" element={<StudentDashboard />} />
+            <Route path="/" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/adminDashboard" element={<AdminDashboard />} />
+            <Route path="/questionnaire" element={<Questionnaire />} />
+            <Route path="/results" element={<Results />} />
         </Routes>
       </BrowserRouter>
   )
