@@ -11,16 +11,24 @@ function Questionnaire() {
   const [user, setUser] = useState({ name: "", email: "" });
   const [draggedItem, setDraggedItem] = useState(null);
   const [choices, setChoices] = useState({ first: null, second: null, third: null });
+  const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Fetch questions
     fetch("/questions.json")
       .then((response) => response.json())
       .then((data) => setQuestions(data));
 
+    // Fetch user details
     fetch("/user.json")
       .then((response) => response.json())
       .then((data) => setUser(data));
+
+    // Fetch courses for multiple-choice question
+    fetch("/courses.json")
+      .then((response) => response.json())
+      .then((data) => setCourses(data));
   }, []);
 
   const handleNext = () => {
@@ -69,16 +77,16 @@ function Questionnaire() {
 
   const renderAvailableOptions = () => {
     const usedChoices = Object.values(choices);
-    return questions[currentStep].options
-      .filter((option) => !usedChoices.includes(option))
-      .map((option) => (
+    return courses
+      .filter((course) => !usedChoices.includes(course.name))
+      .map((course) => (
         <div
-          key={option}
+          key={course.id}
           draggable
-          onDragStart={() => onDragStart(option)}
+          onDragStart={() => onDragStart(course.name)}
           className="draggable-item"
         >
-          {option}
+          {course.name}
         </div>
       ));
   };
