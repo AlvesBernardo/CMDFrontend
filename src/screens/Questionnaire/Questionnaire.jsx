@@ -1,9 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Button from "../../components/questionnaireButton";
 import "../../css/screens/_questionnaire.scss";
 import { useNavigate } from "react-router-dom";
 import { GoArrowRight, GoArrowLeft } from "react-icons/go";
 import { CiGrid42 } from "react-icons/ci";
+
+function DraggableItem({ text, onDragStart, isDropped }) {
+  const itemRef = useRef(null);
+
+  const adjustFontSize = () => {
+    const element = itemRef.current;
+    if (!element) return;
+
+    const parentWidth = element.offsetWidth; // Width of the container
+    const textWidth = element.scrollWidth; // Actual width of the text content
+    const padding = 20; // 10px padding on each side
+
+    if (textWidth > parentWidth - padding) {
+      const scaleFactor = (parentWidth - padding) / textWidth;
+      element.style.fontSize = `${parseFloat(window.getComputedStyle(element).fontSize) * scaleFactor}px`;
+    } else {
+      element.style.fontSize = ""; // Reset font size if it fits
+    }
+  };
+
+  useEffect(() => {
+    adjustFontSize();
+    window.addEventListener("resize", adjustFontSize); // Recalculate on window resize
+    return () => window.removeEventListener("resize", adjustFontSize);
+  }, [text]);
+
+  return (
+    <div
+      ref={itemRef}
+      className={`draggable-item ${isDropped ? "dropped-item" : ""}`}
+      draggable={!isDropped} // Disable dragging if it's in a choice
+      onDragStart={!isDropped ? onDragStart : undefined}
+    >
+      {text}
+    </div>
+  );
+}
 
 function Questionnaire() {
   const [questions, setQuestions] = useState([]);
@@ -15,17 +52,14 @@ function Questionnaire() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch questions
     fetch("/questions.json")
       .then((response) => response.json())
       .then((data) => setQuestions(data));
 
-    // Fetch user details
     fetch("/user.json")
       .then((response) => response.json())
       .then((data) => setUser(data));
 
-    // Fetch courses for multiple-choice question
     fetch("/courses.json")
       .then((response) => response.json())
       .then((data) => setCourses(data));
@@ -80,14 +114,11 @@ function Questionnaire() {
     return courses
       .filter((course) => !usedChoices.includes(course.name))
       .map((course) => (
-        <div
+        <DraggableItem
           key={course.id}
-          draggable
+          text={course.name}
           onDragStart={() => onDragStart(course.name)}
-          className="draggable-item"
-        >
-          {course.name}
-        </div>
+        />
       ));
   };
 
@@ -101,7 +132,10 @@ function Questionnaire() {
       >
         {choices[choice] ? (
           <div className="dropped-item">
-            {choices[choice]}
+            <DraggableItem
+              text={choices[choice]}
+              isDropped={true} // Mark it as dropped
+            />
             <button
               className="clear-choice"
               onClick={() => handleClearChoice(choice)}

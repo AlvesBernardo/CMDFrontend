@@ -150,7 +150,11 @@ textarea {
   align-items: center;
   justify-content: center;
   box-sizing: border-box; /* Include padding in dimensions */
+  overflow: hidden; /* Prevent text overflow */
+  text-overflow: ellipsis;
+  white-space: nowrap; /* Prevent line breaks */
 }
+
 
 .draggable-item:active {
   opacity: 1; /* Fully visible while dragging */
@@ -160,7 +164,7 @@ textarea {
   padding: 10px;
   background-color: #28a745; /* Green when dropped */
   color: white;
-  border-radius: 3px;
+  border-radius: 5px;
   margin: 0; /* No margin when placed in drop zone */
   text-align: center;
   width: 100%; /* Ensure consistent width */
