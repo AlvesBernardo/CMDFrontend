@@ -9,15 +9,15 @@ function Questionnaire() {
   const [questions, setQuestions] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
   const [user, setUser] = useState({ name: "", email: "" });
+  const [draggedItem, setDraggedItem] = useState(null);
+  const [choices, setChoices] = useState({ first: null, second: null, third: null });
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch questions
     fetch("/questions.json")
       .then((response) => response.json())
       .then((data) => setQuestions(data));
 
-    // Fetch user data
     fetch("/user.json")
       .then((response) => response.json())
       .then((data) => setUser(data));
@@ -35,41 +35,97 @@ function Questionnaire() {
     }
   };
 
-  const handleAnswerChange = (e) => {
-    const updatedQuestions = [...questions];
-    updatedQuestions[currentStep].answer = e.target.value;
-    setQuestions(updatedQuestions);
-  };
-
   const handleSubmit = () => {
+    const answers = questions.map((q) => {
+      if (q.type === "multiple-choice") {
+        return { id: q.id, question: q.question, answer: choices };
+      }
+      return { id: q.id, question: q.question, answer: q.answer || "" };
+    });
+
     fetch("/submit-answers", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(questions),
+      body: JSON.stringify(answers),
     }).then(() => alert("Your answers have been submitted successfully!"));
   };
 
-  const getInitials = (name) => {
-    const initials = name
-      .split(" ")
-      .map((n) => n[0])
-      .join("");
-    return initials.toUpperCase();
+  const onDragStart = (item) => {
+    setDraggedItem(item);
+  };
+
+  const onDrop = (choice) => {
+    setChoices((prev) => ({ ...prev, [choice]: draggedItem }));
+    setDraggedItem(null);
+  };
+
+  const onDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleClearChoice = (choice) => {
+    setChoices((prev) => ({ ...prev, [choice]: null }));
+  };
+
+  const renderAvailableOptions = () => {
+    const usedChoices = Object.values(choices);
+    return questions[currentStep].options
+      .filter((option) => !usedChoices.includes(option))
+      .map((option) => (
+        <div
+          key={option}
+          draggable
+          onDragStart={() => onDragStart(option)}
+          className="draggable-item"
+        >
+          {option}
+        </div>
+      ));
+  };
+
+  const renderDropZones = () => {
+    return ["first", "second", "third"].map((choice) => (
+      <div
+        key={choice}
+        onDrop={() => onDrop(choice)}
+        onDragOver={onDragOver}
+        className={`drop-zone ${choices[choice] ? "filled" : ""}`}
+      >
+        {choices[choice] ? (
+          <div className="dropped-item">
+            {choices[choice]}
+            <button
+              className="clear-choice"
+              onClick={() => handleClearChoice(choice)}
+            >
+              X
+            </button>
+          </div>
+        ) : (
+          `${choice.charAt(0).toUpperCase() + choice.slice(1)} Choice`
+        )}
+      </div>
+    ));
   };
 
   return (
     <div className="questionnaire-container" style={{ position: "relative" }}>
-      
-      {/* Top-left user information */}
+      {/* User Info */}
       <div className="user-info">
-        <div className="user-initials">{getInitials(user.name)}</div>
+        <div className="user-initials">
+          {user.name
+            .split(" ")
+            .map((n) => n[0])
+            .join("")
+            .toUpperCase()}
+        </div>
         <div className="user-details">
           <div className="fullname">{user.name}</div>
           <div className="email">{user.email}</div>
         </div>
       </div>
 
-      {/* Dashboard button */}
+      {/* Dashboard Button */}
       <Button
         text="Dashboard"
         onClick={() => navigate("/dashboard")}
@@ -84,13 +140,34 @@ function Questionnaire() {
           <div className="question-box">
             <h2>{questions[currentStep].question}</h2>
           </div>
-          <div className="answer-box">
-            <textarea
-              value={questions[currentStep].answer || ""}
-              onChange={handleAnswerChange}
-              placeholder="Enter your answer here"
-            ></textarea>
-          </div>
+
+          {questions[currentStep].type === "multiple-choice" ? (
+            <div className="drag-and-drop-container">
+              <div className="options">
+                <h3>Available Options</h3>
+                {renderAvailableOptions()}
+              </div>
+              <div className="choices">
+                <h3>Your Choices</h3>
+                {renderDropZones()}
+              </div>
+            </div>
+          ) : (
+            <div className="answer-box">
+              <textarea
+                value={questions[currentStep].answer || ""}
+                onChange={(e) =>
+                  setQuestions((prev) =>
+                    prev.map((q, i) =>
+                      i === currentStep ? { ...q, answer: e.target.value } : q
+                    )
+                  )
+                }
+                placeholder="Enter your answer here"
+              ></textarea>
+            </div>
+          )}
+
           <div className="step-indicator-box">
             <p>
               Step {currentStep + 1} out of {questions.length}

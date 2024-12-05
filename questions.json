@@ -18,5 +18,12 @@
     "id": 4,
     "question": "Where do you see yourself in 5 years?",
     "answer": ""
+  },
+  {
+    "id": 5,
+    "question": "Rank these programming languages in order of preference:",
+    "type": "multiple-choice",
+    "options": ["JavaScript", "Python", "Java", "C#", "Ruby"]
   }
+  
 ]
