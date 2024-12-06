@@ -16,7 +16,9 @@
   },
   {
     "id": 4,
-    "question": "Where do you see yourself in 5 years?",
-    "answer": ""
+    "question": "Make your course choices:",
+    "type": "multiple-choice",
+    "options": ["JavaScript", "Python", "Java", "C#", "Ruby"]
   }
+  
 ]
