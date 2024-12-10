@@ -1,26 +1,40 @@
 import CustomButton from "../../components/CustomButton/CustomButton.jsx";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import api from "../../helpers/AxiosInstance.js";
 
 function SignUp () {
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
     const [studentNumber, setStudentNumber] = useState("");
     const [studentYear, setStudentYear] = useState("");
 
+    const [nameError, setNameError] = useState(null);
     const [emailError, setEmailError] = useState(null);
     const [passwordError, setPasswordError] = useState(null);
     const [repeatPasswordError, setRepeatPasswordError] = useState(null);
     const [studentNumberError, setStudentNumberError] = useState(null);
     const [studentYearError, setStudentYearError] = useState(null);
+    const [serverError, setServerError] = useState('')
+
+    const [isLoading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true);
 
         let isValid = true;
+
+        if (!name) {
+            setNameError('Name is reuqired');
+            isValid = false;
+        } else {
+            setNameError(null);
+        }
 
         if (!email) {
             setEmailError('Email is reuqired');
@@ -71,12 +85,36 @@ function SignUp () {
         }
 
         if (isValid) {
-            navigate("/dashboard");
+
+            const data = {
+                "dtStudentNumber": studentNumber,
+                "dtEmail": email,
+                "dtPassword": password,
+                "dtFullName": name,
+                "dtStudentYear": studentYear,
+            };
+
+            try {
+                const response = await api.post('/student/register', data);
+                if (response.ok) {
+                    navigate('/?signup=success');
+                }
+
+            } catch (error) {
+                if (error.response && error.response.data) {
+                    setServerError(error.response.data.message || "Signup failed.");
+                } else if (error.message) {
+                    setServerError(error.message);
+                } else {
+                    setServerError("An unexpected error occurred.");
+                }
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            setLoading(false);
         }
     };
-
-
-    console.log(studentYear)
 
     return (
         <div className="signUpContainer">
@@ -87,6 +125,45 @@ function SignUp () {
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     <form onSubmit={onSubmit} className="space-y-6">
+                        {nameError !== null ?
+                            <div>
+                                <div className="relative">
+                                    <input
+                                        id="name_error"
+                                        name="name"
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        aria-describedby="name_error"
+                                        className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-black bg-transparent rounded-lg border-1 appearance-none dark:text-black dark:border-red border-red dark:focus:border-red focus:outline-none focus:ring-0 focus:border-red peer"
+                                        placeholder=" "/>
+                                    <label htmlFor="name_error"
+                                           className="absolute text-sm text-red dark:text-red duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">
+                                        Full name
+                                    </label>
+                                </div>
+                                <p id="name_error"
+                                   className="mt-2 text-xs text-red dark:text-red">
+                                    <span className="font-medium">Oh!</span>
+                                    {nameError}
+                                </p>
+                            </div>
+                            :
+                            <div className="relative">
+                                <input id="name"
+                                       name="name"
+                                       type="text"
+                                       value={name}
+                                       onChange={(e) => setName(e.target.value)}
+                                       className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-black bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                       placeholder=" "/>
+                                <label htmlFor="name"
+                                       className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                                    Full name
+                                </label>
+                            </div>
+                        }
+
                         {emailError !== null ?
                             <div>
                                 <div className="relative">
@@ -287,9 +364,25 @@ function SignUp () {
                         </div>
 
                         <div>
-                            <CustomButton type="submit" text="Signup"/>
+                            <CustomButton type="submit" text="Signup" isLoading={isLoading}/>
                         </div>
                     </form>
+
+                    {serverError &&
+                        <div
+                            className="mt-5 flex items-center p-4 mb-4 text-sm text-red border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+                            role="alert">
+                            <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true"
+                                 xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                            </svg>
+                            <span className="sr-only">Info</span>
+                            <div>
+                                <span className="font-medium">Something went wrong!</span> {serverError}
+                            </div>
+                        </div>
+                    }
 
                     <p className="mt-5 text-center text-sm text-gray-500">
                         Already have an account?{" "}
