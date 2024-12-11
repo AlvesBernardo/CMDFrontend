@@ -1,14 +1,9 @@
-import React from 'react';
-import {Navigate, Outlet} from 'react-router-dom';
-import TokenManager from '../helpers/TokenManager.js'
+import { Navigate, Outlet } from "react-router-dom";
+import TokenManager from "../helpers/TokenManager";
 
-function ProtectedRoute() {
-  const token = TokenManager.getAccessToken();
+const ProtectedRoute = () => {
+  const isAuthenticated = !TokenManager.isTokenExpired();
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+};
 
-  if (!token) {
-    return <Navigate to="/" replace />;
-  }
-
-  return <Outlet />;
-}
 export default ProtectedRoute;

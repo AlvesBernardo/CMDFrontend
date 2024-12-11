@@ -63,42 +63,8 @@ textarea {
   justify-content: space-between;
   width: 500px;
   margin-top: 20px;
-
-  button {
-    background-color: #004aad;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-
-    &:disabled {
-      background-color: #d3d3d3;
-      cursor: not-allowed;
-    }
-  }
-
-  .prev-button {
-    background-color: #ffffff;
-    border: 3px solid #004aad;
-    color: #004aad;
-  }
-
-  .next-button {
-    background-color: #004aad;
-    color: white;
-    border: none;
-    padding: 10px 40px;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    width: 370px;
-  }
-
-  .submit-button {
-    background-color: #28a745;
-  }
+  gap: 20px;
+  height: 50px;
 }
 
 .drag-and-drop-container {
@@ -128,7 +94,7 @@ textarea {
     margin-bottom: 15px;
     background-color: #e4ecf4;
     position: sticky;
-    top: 0; 
+    top: 0;
     z-index: 10;
     padding: 10px;
     border-bottom: 2px solid #004aad;
@@ -207,12 +173,13 @@ textarea {
 }
 
 .user-info {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px 0 20px;
   position: absolute;
   top: 20px;
-  left: 20px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
 
   .user-initials {
     background-color: #004aad;

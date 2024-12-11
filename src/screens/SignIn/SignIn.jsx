@@ -1,40 +1,28 @@
 import CustomButton from "../../components/CustomButton/CustomButton.jsx";
-import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import TokenManager from "../../helpers/TokenManager.js";
 import api from "../../helpers/AxiosInstance.js";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
-function SignIn () {
+function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState('');
-    const [serverError, setServerError] = useState('');
-
+    const [emailError, setEmailError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [serverError, setServerError] = useState("");
     const [isLoading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        if (params.get("signup") === "success") {
-            toast.success("Signup successful! Please log in.");
-            const newURL = window.location.pathname;
-            window.history.replaceState({}, document.title, newURL);
-        }
-    }, []);
-
     const onSubmit = async (event) => {
         event.preventDefault();
-
         setLoading(true);
 
         let isValid = true;
 
         if (!email) {
-            setEmailError('Email is required');
+            setEmailError("Email is required");
             isValid = false;
         } else {
             setEmailError(null);
@@ -51,19 +39,19 @@ function SignIn () {
         }
 
         if (isValid) {
-
             const data = {
                 dtEmail: email,
                 dtPassword: password,
             };
 
             try {
-                const response = await api.post('/login/user', data);
+                const response = await api.post("/login/user", data);
 
                 TokenManager.setAccessToken(response.data.dtAccessToken);
                 TokenManager.setRefreshToken(response.data.dtRefreshToken);
 
-                navigate('/?dashboard=success');
+                toast.success("Login successful!");
+                navigate("/adminDashboard");
 
             } catch (error) {
                 if (error.response && error.response.data) {

@@ -2,6 +2,7 @@ import CustomButton from "../../components/CustomButton/CustomButton.jsx";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import api from "../../helpers/AxiosInstance.js";
+import {toast} from "react-toastify";
 
 function SignUp () {
     const [name, setName] = useState("");
@@ -95,10 +96,10 @@ function SignUp () {
             };
 
             try {
-                const response = await api.post('/student/register', data);
-                if (response.ok) {
-                    navigate('/?signup=success');
-                }
+                await api.post('/student/register', data);
+
+                toast.success("You successfully registered, please login!");
+                navigate('/');
 
             } catch (error) {
                 if (error.response && error.response.data) {

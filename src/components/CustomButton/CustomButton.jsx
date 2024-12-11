@@ -1,20 +1,37 @@
 import React from "react";
-import {ClipLoader} from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
-function CustomButton({text, onClick, type, isLoading}) {
+function CustomButton({ text, onClick, type = "button", isLoading, children, width = "100%", color = "primary" }) {
+    const colorStyles = {
+        primary: "bg-primary text-white border-primary hover:bg-white hover:text-primary",
+        secondary: "bg-white text-primary border-primary hover:bg-primary hover:text-white",
+        error: "bg-white text-red border-red hover:bg-red hover:text-white",
+    };
+
     return (
-        <button type={type} onClick={onClick} className={"flex w-full justify-center rounded-md px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 customButton"}>
-            {isLoading ?
+        <button
+            type={type}
+            onClick={onClick}
+            style={{ width }}
+            className={`flex items-center justify-center rounded-md px-3 py-1.5 text-sm font-semibold shadow-sm border focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+                colorStyles[color] || colorStyles.primary
+            }`}
+        >
+            {isLoading ? (
                 <ClipLoader
-                    color={"#ffffff"}
+                    color={color === "primary" ? "#ffffff" : color === "secondary" ? "#007bff" : "#ff0000"}
                     size={25}
                     aria-label="Loading Spinner"
                     data-testid="loader"
                 />
-                :
-                text}
+            ) : (
+                <>
+                    {children && <span className="mr-2">{children}</span>}
+                    {text}
+                </>
+            )}
         </button>
-    )
+    );
 }
 
-export default CustomButton
+export default CustomButton;

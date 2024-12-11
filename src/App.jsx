@@ -1,23 +1,30 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignIn from "./screens/SignIn/SignIn.jsx";
-import Dashboard from "./screens/Dashboard/Dashboard.jsx";
 import SignUp from "./screens/SignUp/SignUp.jsx";
 import ProtectedRoute from "./helpers/ProtectedRoute.jsx";
 import StudentResults from "./screens/StudentResults/StudentResults.jsx";
+import StudentDashboard from "./screens/Dashboard/StudentDashboard.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AdminDashboard from "./screens/Dashboard/AdminDashboard.jsx";
+import Questionnaire from "./screens/Questionnaire/Questionnaire.jsx";
 
 function App() {
-  return (
-      <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route element={<ProtectedRoute />}>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/studentResult" element={<StudentResults />} />
-            </Route>
-        </Routes>
-      </BrowserRouter>
-  )
+    return (
+        <BrowserRouter>
+            <ToastContainer />
+            <Routes>
+                <Route path="/" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route element={<ProtectedRoute />}>
+                    <Route path="/studentDashboard" element={<StudentDashboard />} />
+                    <Route path="/adminDashboard" element={<AdminDashboard />} />
+                    <Route path="/studentResult" element={<StudentResults />} />
+                    <Route path="/questionnaire" element={<Questionnaire />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
-export default App
+export default App;
