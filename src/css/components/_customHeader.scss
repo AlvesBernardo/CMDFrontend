@@ -1,0 +1,20 @@
+.customHeaderContainer {
+  width: 100%;
+  padding: 20px 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #e4ecf4;
+}
+
+.profileContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  .profileDetailsContainer {
+    color: #1763ad;
+    font-size: 20px;
+  }
+}
