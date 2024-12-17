@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import Button from "../../components/questionnaireButton";
 import "../../css/screens/_questionnaire.scss";
-import { useNavigate } from "react-router-dom";
-import { GoArrowRight, GoArrowLeft } from "react-icons/go";
-import { CiGrid42 } from "react-icons/ci";
+
+import CustomButton from "../../components/CustomButton/CustomButton.jsx";
+import {MdOutlineDashboard} from "react-icons/md";
+import {FaLongArrowAltLeft, FaLongArrowAltRight} from "react-icons/fa";
+import {useNavigate} from "react-router-dom";
 
 function DraggableItem({ text, onDragStart, isDropped }) {
   const itemRef = useRef(null);
@@ -20,7 +21,7 @@ function DraggableItem({ text, onDragStart, isDropped }) {
       const scaleFactor = (parentWidth - padding) / textWidth;
       element.style.fontSize = `${parseFloat(window.getComputedStyle(element).fontSize) * scaleFactor}px`;
     } else {
-      element.style.fontSize = ""; // Reset font size if it fits
+      element.style.fontSize = "";
     }
   };
 
@@ -49,6 +50,7 @@ function Questionnaire() {
   const [draggedItem, setDraggedItem] = useState(null);
   const [choices, setChoices] = useState({ first: null, second: null, third: null });
   const [courses, setCourses] = useState([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -150,40 +152,40 @@ function Questionnaire() {
     ));
   };
 
+  const toDashboard = () => {
+    navigate("/studentDashboard")
+  }
+
   return (
     <div className="questionnaire-container" style={{ position: "relative" }}>
-      {/* User Info */}
+
       <div className="user-info">
-        <div className="user-initials">
-          {user.name
-            .split(" ")
-            .map((n) => n[0])
-            .join("")
-            .toUpperCase()}
+        <div style={{display: "flex", alignItems: "center", justifyContent: "center", gap: 20}}>
+          <div className="user-initials">
+            {user.name
+                .split(" ")
+                .map((n) => n[0])
+                .join("")
+                .toUpperCase()}
+          </div>
+          <div className="user-details">
+            <div className="fullname">{user.name}</div>
+            <div className="email">{user.email}</div>
+          </div>
         </div>
-        <div className="user-details">
-          <div className="fullname">{user.name}</div>
-          <div className="email">{user.email}</div>
-        </div>
+        <CustomButton text={"Dashboard"} color={"secondary"} width={'200px'} onClick={toDashboard}>
+          <MdOutlineDashboard/>
+        </CustomButton>
       </div>
 
-      {/* Dashboard Button */}
-      <Button
-        text="Dashboard"
-        onClick={() => navigate("/dashboard")}
-        type="secondary"
-        icon={CiGrid42}
-        iconPosition="left"
-        className="dashboard-button"
-      />
 
       {questions.length > 0 && (
-        <>
-          <div className="question-box">
-            <h2>{questions[currentStep].question}</h2>
-          </div>
+          <>
+            <div className="question-box">
+              <h2>{questions[currentStep].question}</h2>
+            </div>
 
-          {questions[currentStep].type === "multiple-choice" ? (
+            {questions[currentStep].type === "multiple-choice" ? (
             <div className="drag-and-drop-container">
               <div className="options">
                 <h3>Available Options</h3>
@@ -216,25 +218,16 @@ function Questionnaire() {
             </p>
           </div>
           <div className="navigation-buttons">
-            <Button
-              text="Previous"
-              onClick={handlePrevious}
-              type="secondary"
-              disabled={currentStep === 0}
-              icon={GoArrowLeft}
-              iconPosition="left"
-            />
+            <CustomButton text={"Previous"} color={"secondary"} width={'40%'}>
+              <FaLongArrowAltLeft />
+            </CustomButton>
+
             {currentStep < questions.length - 1 ? (
-              <Button
-                text="Next"
-                onClick={handleNext}
-                type="primary"
-                icon={GoArrowRight}
-                iconPosition="right"
-                className="large-next-button"
-              />
+                <CustomButton text={"Next"} color={"primary"} >
+                  <FaLongArrowAltRight />
+                </CustomButton>
             ) : (
-              <Button text="Submit" onClick={handleSubmit} type="primary" />
+                <CustomButton text={"Submit"} color={"primary"} onClick={handleSubmit}/>
             )}
           </div>
         </>

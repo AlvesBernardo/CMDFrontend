@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
-import Button from "../../components/CustomButton/Button";
-import ResultsButton from "../../components/CustomButton/ResultsButton";
 import "../../css/screens/_adminDashboard.scss";
-import LogoutButton from "../../components/LogoutButton";
-import { HiOutlinePencil } from "react-icons/hi";
-import { HiOutlineUsers } from "react-icons/hi";
-import { HiOutlineDocumentReport } from "react-icons/hi";
+import {HiLogout} from "react-icons/hi";
 import imgPlaceholder from "../../images/pinkBow.jpg";
+import CustomButton from "../../components/CustomButton/CustomButton.jsx";
+import { SiReasonstudios } from "react-icons/si";
+import { PiStudent } from "react-icons/pi";
+import {MdOutlineQuestionAnswer} from "react-icons/md";
+import TokenManager from "../../helpers/TokenManager.js";
+import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 const AdminDashboard = () => {
   const [profile, setProfile] = useState({ name: "", email: "" });
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -34,13 +38,17 @@ const AdminDashboard = () => {
   }, []);
 
   const handleLogout = () => {
-    console.log("placeholder");
-  };
+    TokenManager.clearTokens();
+    toast.error("You just logged out!");
+    navigate('/')
+  }
 
   return (
     <div className="dashboard-container">
       <div className="logout-section">
-        <LogoutButton onLogout={handleLogout} />
+        <CustomButton onClick={handleLogout} text={"Logout"} color={"error"}>
+          <HiLogout className="hiLogout" />
+        </CustomButton>
       </div>
       <div className="dashboard-section">
         {error ? (
@@ -57,25 +65,18 @@ const AdminDashboard = () => {
           </div>
         )}
         <div className="buttons-section">
-          <Button
-            icon={HiOutlinePencil}
-            text="Manage Studios"
-            type="primary"
-            link="/"
-          />
-          <Button
-            icon={HiOutlineUsers}
-            text="Student list"
-            type="secondary"
-            link="/"
-          />
+          <CustomButton text={"Manage Studios"}>
+            <SiReasonstudios size={20}/>
+          </CustomButton>
+
+          <CustomButton text={"Student list"} color={"secondary"}>
+            <PiStudent size={20}/>
+          </CustomButton>
         </div>
         <div className="second-button-line-section">
-          <ResultsButton
-            icon={HiOutlineDocumentReport}
-            text="Results"
-            link="/"
-          />
+          <CustomButton text={"Results"} color={"secondary"}>
+            <MdOutlineQuestionAnswer size={20}/>
+          </CustomButton>
         </div>
       </div>
     </div>
