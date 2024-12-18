@@ -6,6 +6,7 @@ function CustomButton({ text, onClick, type = "button", isLoading, children, wid
         primary: "bg-primary text-white border-primary hover:bg-white hover:text-primary",
         secondary: "bg-white text-primary border-primary hover:bg-primary hover:text-white",
         error: "bg-white text-red border-red hover:bg-red hover:text-white",
+        warning: "bg-warning text-white border-warning hover:bg-white hover:text-warning",
     };
 
     return (
@@ -19,14 +20,14 @@ function CustomButton({ text, onClick, type = "button", isLoading, children, wid
         >
             {isLoading ? (
                 <ClipLoader
-                    color={color === "primary" ? "#ffffff" : color === "secondary" ? "#007bff" : "#ff0000"}
+                    color={color === "primary" ? "#ffffff" : color === "secondary" ? "#007bff" : color === "warning" ? "DEC804" : "#ff0000"}
                     size={25}
                     aria-label="Loading Spinner"
                     data-testid="loader"
                 />
             ) : (
                 <>
-                    {children && <span className="mr-2">{children}</span>}
+                    {children && <span>{children}</span>}
                     {text}
                 </>
             )}

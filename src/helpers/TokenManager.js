@@ -27,7 +27,7 @@ const TokenManager = {
         }
 
         const refreshToken = TokenManager.getRefreshToken();
-        const response = await axios.post("/refresh-token", { refreshToken });
+        const response = await axios.post("/auth/refresh", { refreshToken });
         TokenManager.setAccessToken(response.data.accessToken);
         TokenManager.setRefreshToken(response.data.refreshToken);
 

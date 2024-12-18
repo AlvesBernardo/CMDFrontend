@@ -10,7 +10,8 @@ export default {
       'background' : '#C6D1DC',
       'white' : '#ffffff',
       'red' : '#FF0000',
-      'black' : '#000000'
+      'black' : '#000000',
+      'warning' : '#DEC804',
     }
   },
   plugins: [require('@tailwindcss/forms')],
