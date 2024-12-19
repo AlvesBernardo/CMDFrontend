@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Mehdi Sadeghi",
+    "email": "mehdi.sadeghi@student.nhlstenden.com",
+    "studio": "IT"
+  },
+  {
+    "id": 2,
+    "name": "John Doe",
+    "email": "john.doe@student.nhlstenden.com",
+    "studio": "Media"
+  },
+  {
+    "id": 3,
+    "name": "Jane Smith",
+    "email": "jane.smith@student.nhlstenden.com",
+    "studio": "Design"
+  }
+]
