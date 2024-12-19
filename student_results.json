@@ -1,0 +1,62 @@
+[
+  { 
+    "id": 1, 
+    "name": "John Smith", 
+    "email": "john.smith@student.nhlstenden.com", 
+    "studio": "IT" 
+  },
+  { 
+    "id": 2, 
+    "name": "Walter White", 
+    "email": "walter.white@student.nhlstenden.com", 
+    "studio": "Business" 
+  },
+  { 
+    "id": 3, 
+    "name": "Hank Green", 
+    "email": "hank.green@student.nhlstenden.com", 
+    "studio": "Economics" 
+  },
+  { 
+    "id": 4, 
+    "name": "Bobbie Black", 
+    "email": "bobbie.black@student.nhlstenden.com", 
+    "studio": "Law" 
+  },
+  { 
+    "id": 5, 
+    "name": "Dave von Hamburg", 
+    "email": "dave.von.hamburg@student.nhlstenden.com", 
+    "studio": "Computer Science" 
+  },
+  { 
+    "id": 6, 
+    "name": "John Smith", 
+    "email": "john.smith@student.nhlstenden.com", 
+    "studio": "IT" 
+  },
+  { 
+    "id": 7, 
+    "name": "Walter White", 
+    "email": "walter.white@student.nhlstenden.com", 
+    "studio": "Business" 
+  },
+  { 
+    "id": 8, 
+    "name": "Hank Green", 
+    "email": "hank.green@student.nhlstenden.com", 
+    "studio": "Economics" 
+  },
+  { 
+    "id": 9, 
+    "name": "Bobbie Black", 
+    "email": "bobbie.black@student.nhlstenden.com", 
+    "studio": "Law" 
+  },
+  { 
+    "id": 10, 
+    "name": "Dave von Hamburg", 
+    "email": "dave.von.hamburg@student.nhlstenden.com", 
+    "studio": "Computer Science" 
+  }
+]

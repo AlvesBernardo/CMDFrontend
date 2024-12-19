@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from "react";
 import CustomList from "../../components/CustomList/CustomList.jsx";
-import React, {useEffect, useState} from "react";
 import CustomHeader from "../../components/CustomHeader/CustomHeader.jsx";
 import CustomButton from "../../components/CustomButton/CustomButton.jsx";
 import Modal from "../../components/CustomModal/CustomModal.jsx";
@@ -9,12 +9,12 @@ import axios from "axios";
 //need to maybe create a new scss for this one specifically or change it completely, to make it 
 //so that the email is not capitalized (right now thats in the customlisitem scss) and that email and studio
 //are centered in their own flex boxes.
-function ManageStudios () {
 
+
+function ManageStudios() {
     const [list, setList] = useState([]);
 
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-
     const [newStudioName, setNewStudioName] = useState("");
     const [newStudioCapacity, setNewStudioCapacity] = useState("");
 
@@ -22,68 +22,36 @@ function ManageStudios () {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        setList(
-            [
-                { id: 1, name: "John Smith", email: "john.smith@student.nhlstenden.com", studio: "IT" },
-                { id: 2, name: "Walter White", email: "walter.white@student.nhlstenden.com", studio: "Business" },
-                { id: 3, name: "Hank Green", email: "hank.green@student.nhlstenden.com", studio: "Economics" },
-                { id: 4, name: "Bobbie Black", email: "bobbie.black@student.nhlstenden.com", studio: "Law" },
-                { id: 5, name: "Dave von Hamburg", email: "dave.von.hamburg@student.nhlstenden.com", studio: "Computer Science" },
-                { id: 6, name: "John Smith", email: "john.smith@student.nhlstenden.com", studio: "IT" } ,
-                { id: 7, name: "Walter White", email: "walter.white@student.nhlstenden.com", studio: "Business" },
-                { id: 8, name: "Hank Green", email: "hank.green@student.nhlstenden.com", studio: "Economics" },
-                { id: 9, name: "Bobbie Black", email: "bobbie.black@student.nhlstenden.com", studio: "Law" },
-                { id: 10, name: "Dave von Hamburg", email: "dave.von.hamburg@student.nhlstenden.com", studio: "Computer Science" },
-                { id: 11, name: "John Smith", email: "john.smith@student.nhlstenden.com", studio: "IT" } ,
-                { id: 12, name: "Walter White", email: "walter.white@student.nhlstenden.com", studio: "Business" },
-                { id: 13, name: "Hank Green", email: "hank.green@student.nhlstenden.com", studio: "Economics" },
-                { id: 14, name: "Bobbie Black", email: "bobbie.black@student.nhlstenden.com", studio: "Law" },
-                { id: 15, name: "Dave von Hamburg", email: "dave.von.hamburg@student.nhlstenden.com", studio: "Computer Science" }
-            ]
-        )
-        // fetchStudios();
+        const fetchStudiosFromJSON = async () => {
+            setLoading(true);
+            try {
+                const response = await fetch("/student_results.json");
+                if (!response.ok) {
+                    throw new Error("Failed to load JSON file");
+                }
+                const data = await response.json();
+                setList(data);
+                setError("");
+            } catch (err) {
+                console.error("Error fetching studios:", err);
+                setError("Failed to load student results. Please try again later.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchStudiosFromJSON();
     }, []);
 
-    const fetchStudios = async () => {
-        setLoading(true);
-        try {
-            const response = await axios.get("/api/studios");
-            setList(response.data);
-            setError("");
-        } catch (err) {
-            console.error("Error fetching studios:", err);
-            setError("Failed to fetch studios. Please try again later.");
-        } finally {
-            setLoading(false);
-        }
-    };
-
     const handleRemove = async (id) => {
-        console.log(id)
-        // try {
-        //     await axios.delete(`/api/studios/${id}`);
-        //     setList(prevList => prevList.filter(item => item.id !== id));
-        //     setError("");
-        // } catch (err) {
-        //     console.error("Error removing studio:", err);
-        //     setError("Failed to remove the studio. Please try again.");
-        // }
+        console.log(id);
     };
 
     const handleEdit = async (id, updatedData) => {
-        console.log(id)
-        console.log(updatedData)
-        // try {
-        //     const response = await axios.put(`/api/studios/${id}`, updatedData);
-        //     setList(prevList => prevList.map(item => item.id === id ? response.data : item));
-        //     setError("");
-        // } catch (err) {
-        //     console.error("Error editing studio:", err);
-        //     setError("Failed to edit the studio. Please try again.");
-        // }
+        console.log(id, updatedData);
     };
 
-    const handleOpenAddModal = () => setIsAddModalOpen(true);
+    // const handleOpenAddModal = () => setIsAddModalOpen(true);
 
     const handleCloseAddModal = () => {
         setIsAddModalOpen(false);
@@ -92,25 +60,7 @@ function ManageStudios () {
     };
 
     const handleConfirmAdd = async () => {
-        console.log(newStudioName)
-
-        // if (newStudioName.trim() === "" || newStudioCapacity.trim() === "") {
-        //     alert("Please fill in all fields.");
-        //     return;
-        // }
-        // try {
-        //     const newStudio = {
-        //         name: newStudioName,
-        //         capacity: newStudioCapacity
-        //     };
-        //     const response = await axios.post("/api/studios", newStudio);
-        //     setList(prevList => [...prevList, response.data]);
-        //     setError("");
-        //     handleCloseAddModal();
-        // } catch (err) {
-        //     console.error("Error adding studio:", err);
-        //     setError("Failed to add the studio. Please try again.");
-        // }
+        console.log(newStudioName);
     };
 
     return (
@@ -120,14 +70,6 @@ function ManageStudios () {
                 name="Mehdi Sadeghi"
                 email="mehdi.sadeghi@student.nhlstenden.com"
             />
-            {/* <div className="manageStudiosButtonContainer my-4">
-                <CustomButton
-                    color="primary"
-                    text="Add new studio"
-                    width="200px"
-                    onClick={handleOpenAddModal}
-                />
-            </div> */} 
             {loading ? (
                 <p>Loading studios...</p>
             ) : error ? (
@@ -141,7 +83,6 @@ function ManageStudios () {
                     onEdit={handleEdit}
                 />
             )}
-
             <Modal
                 isOpen={isAddModalOpen}
                 onClose={handleCloseAddModal}
@@ -179,7 +120,6 @@ function ManageStudios () {
             </Modal>
         </div>
     );
-
 }
 
-export default ManageStudios
+export default ManageStudios;
