@@ -15,13 +15,16 @@ const CustomListItem = ({ item, hasEditButton, hasRemoveButton, onRemove, onEdit
         const element = emailRef.current;
         if (!element) return;
 
+        const defaultFontSize = 16; // default size in pixels when scaling is not needed.
+        element.style.fontSize = `${defaultFontSize}px`;
+
         const parentWidth = element.offsetWidth;
         const textWidth = element.scrollWidth;
         const padding = 20;
 
         if (textWidth > parentWidth - padding) {
             const scaleFactor = (parentWidth - padding) / textWidth;
-            element.style.fontSize = `${parseFloat(window.getComputedStyle(element).fontSize) * scaleFactor}px`;
+            element.style.fontSize = `${defaultFontSize * scaleFactor}px`;
         } else {
             element.style.fontSize = "";
         }
