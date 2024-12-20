@@ -1,21 +1,41 @@
 import CustomList from "../../components/CustomList/CustomList.jsx";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import CustomHeader from "../../components/CustomHeader/CustomHeader.jsx";
 import CustomButton from "../../components/CustomButton/CustomButton.jsx";
 import Modal from "../../components/CustomModal/CustomModal.jsx";
 import axios from "axios";
 
-function ManageStudios() {
+function ManageStudios () {
+
     const [list, setList] = useState([]);
+
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
     const [newStudioName, setNewStudioName] = useState("");
     const [newStudioCapacity, setNewStudioCapacity] = useState("");
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-
     useEffect(() => {
-        fetchStudios();
+        setList(
+            [
+                { id: 1, name: "IT", capacity: "10PP"},
+                { id: 2, name: "Human Resources", capacity: "5PP" },
+                { id: 3, name: "Finance", capacity: "7PP" },
+                { id: 4, name: "Marketing", capacity: "8PP" },
+                { id: 5, name: "Sales", capacity: "12PP" },
+                { id: 6, name: "Customer Support", capacity: "6PP" },
+                { id: 7, name: "Research & Development", capacity: "9PP" },
+                { id: 8, name: "Operations", capacity: "11PP" },
+                { id: 9, name: "Research & Development", capacity: "9PP" },
+                { id: 10, name: "Operations", capacity: "11PP" },
+                { id: 11, name: "Research & Development", capacity: "9PP" },
+                { id: 12, name: "Operations", capacity: "11PP" },
+                { id: 13, name: "Operations", capacity: "11PP" },
+            ]
+        )
+        // fetchStudios();
     }, []);
 
     const fetchStudios = async () => {
@@ -33,27 +53,28 @@ function ManageStudios() {
     };
 
     const handleRemove = async (id) => {
-        try {
-            await axios.delete(`/${process.env.REACT_APP_API_URL}/studios/${studio_id}`);
-            setList((prevList) => prevList.filter((item) => item.id !== id));
-            setError("");
-        } catch (err) {
-            console.error("Error removing studio:", err);
-            setError("Failed to remove the studio. Please try again.");
-        }
+        console.log(id)
+        // try {
+        //     await axios.delete(`/${process.env.REACT_APP_API_URL}/studios/${studio_id}`);
+        //     setList(prevList => prevList.filter(item => item.id !== id));
+        //     setError("");
+        // } catch (err) {
+        //     console.error("Error removing studio:", err);
+        //     setError("Failed to remove the studio. Please try again.");
+        // }
     };
 
     const handleEdit = async (id, updatedData) => {
-        try {
-            const response = await axios.put(`/${process.env.REACT_APP_API_URL}/studios/${studio_id}`, updatedData);
-            setList((prevList) =>
-                prevList.map((item) => (item.id === id ? response.data : item))
-            );
-            setError("");
-        } catch (err) {
-            console.error("Error editing studio:", err);
-            setError("Failed to edit the studio. Please try again.");
-        }
+        console.log(id)
+        console.log(updatedData)
+        // try {
+        //     const response = await axios.put(`/${process.env.REACT_APP_API_URL}/studios/${studio_id}`, updatedData);
+        //     setList(prevList => prevList.map(item => item.id === id ? response.data : item));
+        //     setError("");
+        // } catch (err) {
+        //     console.error("Error editing studio:", err);
+        //     setError("Failed to edit the studio. Please try again.");
+        // }
     };
 
     const handleOpenAddModal = () => setIsAddModalOpen(true);
@@ -65,23 +86,25 @@ function ManageStudios() {
     };
 
     const handleConfirmAdd = async () => {
-        if (newStudioName.trim() === "" || newStudioCapacity.trim() === "") {
-            alert("Please fill in all fields.");
-            return;
-        }
-        try {
-            const newStudio = {
-                name: newStudioName,
-                capacity: newStudioCapacity,
-            };
-            const response = await axios.post("/${process.env.REACT_APP_API_URL}/studios/", newStudio);
-            setList((prevList) => [...prevList, response.data]);
-            setError("");
-            handleCloseAddModal();
-        } catch (err) {
-            console.error("Error adding studio:", err);
-            setError("Failed to add the studio. Please try again.");
-        }
+        console.log(newStudioName)
+
+        // if (newStudioName.trim() === "" || newStudioCapacity.trim() === "") {
+        //     alert("Please fill in all fields.");
+        //     return;
+        // }
+        // try {
+        //     const newStudio = {
+        //         name: newStudioName,
+        //         capacity: newStudioCapacity
+        //     };
+        //     const response = await axios.post("/${process.env.REACT_APP_API_URL}/studios/", newStudio);
+        //     setList(prevList => [...prevList, response.data]);
+        //     setError("");
+        //     handleCloseAddModal();
+        // } catch (err) {
+        //     console.error("Error adding studio:", err);
+        //     setError("Failed to add the studio. Please try again.");
+        // }
     };
 
     return (
@@ -150,6 +173,7 @@ function ManageStudios() {
             </Modal>
         </div>
     );
+
 }
 
-export default ManageStudios;
+export default ManageStudios
