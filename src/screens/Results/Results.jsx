@@ -51,7 +51,7 @@ function ManageStudios() {
         console.log(id, updatedData);
     };
 
-    // const handleOpenAddModal = () => setIsAddModalOpen(true);
+    const handleOpenAddModal = () => setIsAddModalOpen(true);
 
     const handleCloseAddModal = () => {
         setIsAddModalOpen(false);
