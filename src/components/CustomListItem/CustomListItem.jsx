@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import CustomButton from "../CustomButton/CustomButton.jsx";
 import Modal from "../CustomModal/CustomModal.jsx";
 
@@ -8,6 +8,30 @@ const CustomListItem = ({ item, hasEditButton, hasRemoveButton, onRemove, onEdit
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
     const [editedData, setEditedData] = useState({ ...item });
+
+    const emailRef = useRef(null);
+
+    const adjustFontSize = () => {
+        const element = emailRef.current;
+        if (!element) return;
+
+        const parentWidth = element.offsetWidth;
+        const textWidth = element.scrollWidth;
+        const padding = 20;
+
+        if (textWidth > parentWidth - padding) {
+            const scaleFactor = (parentWidth - padding) / textWidth;
+            element.style.fontSize = `${parseFloat(window.getComputedStyle(element).fontSize) * scaleFactor}px`;
+        } else {
+            element.style.fontSize = "";
+        }
+    };
+
+    useEffect(() => {
+        adjustFontSize();
+        window.addEventListener("resize", adjustFontSize);
+        return () => window.removeEventListener("resize", adjustFontSize);
+    }, [item.email]);
 
     const handleOpenRemoveModal = () => setIsRemoveModalOpen(true);
     const handleCloseRemoveModal = () => setIsRemoveModalOpen(false);
@@ -45,24 +69,24 @@ const CustomListItem = ({ item, hasEditButton, hasRemoveButton, onRemove, onEdit
             <div className="dataContainer flex-1">
                 {Object.entries(item).map(([key, value]) => {
                     if (key === "id") return null;
-                    if (key === "studio") 
-                    return (
-                        <p key={key} className="dataItemStudio">
-                            <span className="font-semibold capitalize">{value}</span>
-                        </p>
-                    );
-                    if(key === "email")
-                    return (
-                        <p key={key} className="dataItem">
-                            <span className="font-semibold">{value}</span>
-                        </p>
-                    )
+                    if (key === "studio")
+                        return (
+                            <p key={key} className="dataItemStudio">
+                                <span className="font-semibold capitalize">{value}</span>
+                            </p>
+                        );
+                    if (key === "email")
+                        return (
+                            <p key={key} className="dataItemEmail" ref={emailRef}>
+                                <span className="font-semibold">{value}</span>
+                            </p>
+                        );
                     else
-                    return (
-                        <p key={key} className="dataItem">
-                            <span className="font-semibold capitalize">{value}</span>
-                        </p>
-                    );
+                        return (
+                            <p key={key} className="dataItem">
+                                <span className="font-semibold capitalize">{value}</span>
+                            </p>
+                        );
                 })}
             </div>
             <div className="customListItemButtonContainer flex space-x-2">
