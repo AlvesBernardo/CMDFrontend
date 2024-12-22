@@ -13,7 +13,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-
   max-height: calc(100vh - 200px);
   overflow-y: auto;
   margin-top: auto;
@@ -49,6 +48,41 @@
   }
 }
 
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 65%;
+  margin: 10px auto;
+  margin-bottom: -25px;
+  font-weight: bold;
+  color: #0056b3;
+  text-decoration: none;
+
+  .header-item {
+    flex: 0.7;
+    text-align: left;
+    user-select: none;
+  }
+
+  .header-item:first-child {
+    flex: 1;
+  }
+
+  .header-item:last-child {
+    flex:0.88;
+  }
+
+  .header-item span {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .header-item span:hover {
+    color: #003b80;
+  }
+}
+
 .result-item {
   display: flex;
   align-items: center;
@@ -58,22 +92,4 @@
   border-radius: 10px;
   background-color: #ffffff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border: 2px dashed blue;
-}
-
-.result-item .course-name {
-  flex: 2;
-}
-
-.result-item .course-date {
-  flex-grow: 1;
-  text-align: left;
-  flex: 2;
-}
-
-.result-item .status {
-  flex: 0.65;
-  text-align: center;
-  padding: 5px 10px;
-  border-radius: 20px;
 }
