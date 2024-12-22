@@ -1,21 +1,6 @@
 [
   {
     "id": 1,
-    "question": "How do you describe yourself?",
-    "answer": ""
-  },
-  {
-    "id": 2,
-    "question": "What are your hobbies?",
-    "answer": ""
-  },
-  {
-    "id": 3,
-    "question": "What is your favorite food?",
-    "answer": ""
-  },
-  {
-    "id": 4,
     "question": "Make your course choices:",
     "type": "multiple-choice",
     "options": ["JavaScript", "Python", "Java", "C#", "Ruby"]
