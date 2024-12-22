@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AdminDashboard from "./screens/Dashboard/AdminDashboard.jsx";
 import Questionnaire from "./screens/Questionnaire/Questionnaire.jsx";
 import ManageStudios from "./screens/ManageStudios/ManageStudios.jsx";
+import StudentList from "./screens/StudentList/StudentList.jsx";
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                     <Route path="/studentResult" element={<StudentResults />} />
                     <Route path="/questionnaire" element={<Questionnaire />} />
                     <Route path="/manageStudios" element={<ManageStudios />} />
+                    <Route path="/studentList" element={<StudentList />} />
                 </Route>
             </Routes>
         </BrowserRouter>
