@@ -71,7 +71,7 @@ const CustomListItem = ({ item, hasEditButton, hasRemoveButton, onRemove, onEdit
         <div className="customListItemContainer flex items-center justify-between p-4 bg-white rounded-lg shadow">
             <div className="dataContainer flex-1">
                 {Object.entries(item).map(([key, value]) => {
-                    if (key === "id") return null;
+                    if (key === "id" || key === "semester") return null;
                     if (key === "studio")
                         return (
                             <p key={key} className="dataItemStudio">

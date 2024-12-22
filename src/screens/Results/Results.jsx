@@ -4,15 +4,13 @@ import CustomHeader from "../../components/CustomHeader/CustomHeader.jsx";
 import CustomButton from "../../components/CustomButton/CustomButton.jsx";
 import Modal from "../../components/CustomModal/CustomModal.jsx";
 import axios from "axios";
-//aight, i copied the code from managestudios. Try to change this so it looks like the figma design.
-//firgure out how custom list and list item work
-//need to maybe create a new scss for this one specifically or change it completely, to make it 
-//so that the email is not capitalized (right now thats in the customlisitem scss) and that email and studio
-//are centered in their own flex boxes.
+import "../../css/screens/_results.scss";
 
 
 function ManageStudios() {
     const [list, setList] = useState([]);
+    const [filteredList, setFilteredList] = useState([]);
+    const [selectedSemester, setSelectedSemester] = useState("2023-2024 Semester one");
 
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [newStudioName, setNewStudioName] = useState("");
@@ -25,12 +23,18 @@ function ManageStudios() {
         const fetchStudiosFromJSON = async () => {
             setLoading(true);
             try {
-                const response = await fetch("/student_results.json");
+                const response = await fetch("/admin_student_results.json");
                 if (!response.ok) {
                     throw new Error("Failed to load JSON file");
                 }
                 const data = await response.json();
                 setList(data);
+
+                const initialFilteredList = data.filter(
+                    (item) => item.semester === selectedSemester
+                );
+                setFilteredList(initialFilteredList);
+
                 setError("");
             } catch (err) {
                 console.error("Error fetching studios:", err);
@@ -42,6 +46,14 @@ function ManageStudios() {
 
         fetchStudiosFromJSON();
     }, []);
+
+    const handleSemesterChange = (event) => {
+        const semester = event.target.value;
+        setSelectedSemester(semester);
+
+        const updatedList = list.filter(item => item.semester === semester);
+        setFilteredList(updatedList);
+    };
 
     const handleRemove = async (id) => {
         console.log(id);
@@ -70,13 +82,27 @@ function ManageStudios() {
                 name="Mehdi Sadeghi"
                 email="mehdi.sadeghi@student.nhlstenden.com"
             />
+
+            <div className="dropdown-container">
+                <select
+                    id="semester-select"
+                    value={selectedSemester}
+                    onChange={handleSemesterChange}
+                    className="dropdown-select"
+                >
+                    <option value="2023-2024 Semester one">2023-2024 Semester one</option>
+                    <option value="2023-2024 Semester two">2023-2024 Semester two</option>
+                    <option value="2024-2025 Semester one">2024-2025 Semester one</option>
+                </select>
+            </div>
+
             {loading ? (
                 <p>Loading studios...</p>
             ) : error ? (
                 <p className="text-red-500">{error}</p>
             ) : (
                 <CustomList
-                    list={list}
+                    list={filteredList}
                     hasRemoveButton={true}
                     hasEditButton={true}
                     onRemove={handleRemove}

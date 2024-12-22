@@ -14,20 +14,51 @@
   flex-direction: column;
   gap: 20px;
 
-  max-height: calc(100vh - 200px); 
-  overflow-y: auto; 
-  margin-top: auto; 
-  margin-bottom: auto; 
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.dropdown-container {
+  display: flex;
+  justify-content: flex-start;
+  width: 70%;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.dropdown-select {
+  padding: 10px;
+  padding-right: 30px;
+  border: 0;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #ffffff;
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: #f8f9fa;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
 }
 
 .result-item {
   display: flex;
   align-items: center;
-  justify-content: space-between; 
-  padding: 25px 25px;
+  justify-content: space-between;
+  width: 60%;
+  padding: 20px 20px;
   border-radius: 10px;
   background-color: #ffffff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 2px dashed blue;
 }
 
 .result-item .course-name {
@@ -45,19 +76,4 @@
   text-align: center;
   padding: 5px 10px;
   border-radius: 20px;
-}
-
-.status-pending {
-  background-color: #ffd700;
-  color: #fff;
-}
-
-.status-accepted {
-  background-color: #28a745;
-  color: #fff;
-}
-
-.status-rejected {
-  background-color: #dc3545;
-  color: #fff;
 }
