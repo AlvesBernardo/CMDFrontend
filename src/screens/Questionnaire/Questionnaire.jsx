@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../css/screens/_questionnaire.scss";
-
+import CustomHeader from "../../components/CustomHeader/CustomHeader.jsx";
 import CustomButton from "../../components/CustomButton/CustomButton.jsx";
 import {MdOutlineDashboard} from "react-icons/md";
 import {FaLongArrowAltLeft, FaLongArrowAltRight} from "react-icons/fa";
@@ -158,26 +158,11 @@ function Questionnaire() {
 
   return (
     <div className="questionnaire-container" style={{ position: "relative" }}>
-
-      <div className="user-info">
-        <div style={{display: "flex", alignItems: "center", justifyContent: "center", gap: 20}}>
-          <div className="user-initials">
-            {user.name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")
-                .toUpperCase()}
-          </div>
-          <div className="user-details">
-            <div className="fullname">{user.name}</div>
-            <div className="email">{user.email}</div>
-          </div>
-        </div>
-        <CustomButton text={"Dashboard"} color={"secondary"} width={'200px'} onClick={toDashboard}>
-          <MdOutlineDashboard/>
-        </CustomButton>
-      </div>
-
+      <CustomHeader
+        profilePicture="nhlLogo.png"
+        name="Mehdi Sadeghi"
+        email="mehdi.sadeghi@student.nhlstenden.com"
+      />
 
       {questions.length > 0 && (
           <>
