@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../helpers/AxiosInstance.js";
 import CustomHeader from "../../components/CustomHeader/CustomHeader.jsx";
 import CustomList from "../../components/CustomList/CustomList.jsx";
 
@@ -15,7 +16,7 @@ function StudentList() {
     const fetchStudents = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${process.env.REACT_APP_API_URL}/students`);
+            const response = await api.get(`/api/v1/students`);
             setStudents(response.data);
             setError("");
         } catch (err) {
@@ -26,10 +27,10 @@ function StudentList() {
         }
     };
 
-    const handleRemove = async (student_id) => {
+    const handleRemove = async (user_id) => {
         try {
-            await axios.delete(`${process.env.REACT_APP_API_URL}/students/${student_id}`);
-            setStudents((prevStudents) => prevStudents.filter((student) => student.id !== student_id));
+            await api.delete(`/api/v1/students/${user_id}`);
+            setStudents((prevStudents) => prevStudents.filter((student) => student.id !== user_id));
             setError("");
         } catch (err) {
             console.error("Error removing student:", err);
@@ -37,12 +38,12 @@ function StudentList() {
         }
     };
 
-    const handleEdit = async (student_id, updatedData) => {
+    const handleEdit = async (user_id, updatedData) => {
         try {
-            await axios.put(`${process.env.REACT_APP_API_URL}/students/${student_id}`, updatedData);
+            await api.put(`/api/v1/students/${user_id}`, updatedData);
             setStudents((prevStudents) =>
                 prevStudents.map((student) =>
-                    student.id === student_id ? { ...student, ...updatedData } : student
+                    student.id === user_id ? { ...student, ...updatedData } : student
                 )
             );
             setError("");
@@ -52,15 +53,16 @@ function StudentList() {
         }
     };
 
+
     return (
-        <div className="manageStudiosContainer p-6">
+        <div className="manageStudentsContainer p-6">
             <CustomHeader
                 profilePicture="nhlLogo.png"
                 name="Mehdi Sadeghi"
                 email="mehdi.sadeghi@student.nhlstenden.com"
             />
             {loading ? (
-                <p>Loading studios...</p>
+                <p>Loading students...</p>
             ) : error ? (
                 <p className="text-red-500">{error}</p>
             ) : (
