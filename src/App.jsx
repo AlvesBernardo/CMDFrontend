@@ -16,12 +16,13 @@ function App() {
         <BrowserRouter>
             <ToastContainer />
             <Routes>
+                <Route path="/studentResult" element={<StudentResults />} />
                 <Route path="/" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route element={<ProtectedRoute />}>
                     <Route path="/studentDashboard" element={<StudentDashboard />} />
                     <Route path="/adminDashboard" element={<AdminDashboard />} />
-                    <Route path="/studentResult" element={<StudentResults />} />
+                    
                     <Route path="/questionnaire" element={<Questionnaire />} />
                     <Route path="/manageStudios" element={<ManageStudios />} />
                     <Route path="/studentList" element={<StudentList />} />
