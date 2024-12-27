@@ -38,21 +38,6 @@ function StudentList() {
         }
     };
 
-    const handleEdit = async (user_id, updatedData) => {
-        try {
-            await api.put(`/api/v1/students/${user_id}`, updatedData);
-            setStudents((prevStudents) =>
-                prevStudents.map((student) =>
-                    student.id === user_id ? { ...student, ...updatedData } : student
-                )
-            );
-            setError("");
-        } catch (err) {
-            console.error("Error editing student:", err);
-            setError("Failed to edit the student. Please try again.");
-        }
-    };
-
 
     return (
         <div className="manageStudentsContainer p-6">
