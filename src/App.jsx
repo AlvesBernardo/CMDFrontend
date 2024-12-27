@@ -27,11 +27,8 @@ function App() {
                     
                     <Route path="/questionnaire" element={<Questionnaire />} />
                     <Route path="/manageStudios" element={<ManageStudios />} />
-<<<<<<< HEAD
                     <Route path="/results" element={<Results />} />
-=======
                     <Route path="/studentList" element={<StudentList />} />
->>>>>>> development
                 </Route>
             </Routes>
         </BrowserRouter>
