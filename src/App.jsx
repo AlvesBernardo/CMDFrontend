@@ -11,21 +11,27 @@ import Questionnaire from "./screens/Questionnaire/Questionnaire.jsx";
 import ManageStudios from "./screens/ManageStudios/ManageStudios.jsx";
 import Results from "./screens/Results/Results.jsx";
 import { Result } from "postcss";
+import StudentList from "./screens/StudentList/StudentList.jsx";
 
 function App() {
     return (
         <BrowserRouter>
             <ToastContainer />
             <Routes>
+                <Route path="/studentResult" element={<StudentResults />} />
                 <Route path="/" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route element={<ProtectedRoute />}>
                     <Route path="/studentDashboard" element={<StudentDashboard />} />
                     <Route path="/adminDashboard" element={<AdminDashboard />} />
-                    <Route path="/studentResult" element={<StudentResults />} />
+                    
                     <Route path="/questionnaire" element={<Questionnaire />} />
                     <Route path="/manageStudios" element={<ManageStudios />} />
+<<<<<<< HEAD
                     <Route path="/results" element={<Results />} />
+=======
+                    <Route path="/studentList" element={<StudentList />} />
+>>>>>>> development
                 </Route>
             </Routes>
         </BrowserRouter>
