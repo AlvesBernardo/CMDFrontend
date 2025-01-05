@@ -16,16 +16,24 @@ function StudentList() {
     const fetchStudents = async () => {
         setLoading(true);
         try {
-            const response = await api.get(`/api/v1/students`);
-            setStudents(response.data);
-            setError("");
+            const response = await fetch("http://localhost:8000/api/v1/students");
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const responseData = await response.json();
+            console.log("Fetched Students:", responseData);
+    
+            // Update state with the students' data
+            setStudents(responseData.data);
         } catch (err) {
-            console.error("Error fetching students:", err);
+            console.error("Fetch Error:", err);
             setError("Failed to fetch students. Please try again later.");
         } finally {
             setLoading(false);
         }
     };
+    
+    
 
     const handleRemove = async (user_id) => {
         try {
@@ -56,7 +64,6 @@ function StudentList() {
                     hasRemoveButton={true}
                     hasEditButton={false}
                     onRemove={handleRemove}
-                    onEdit={handleEdit}
                 />
             )}
         </div>
