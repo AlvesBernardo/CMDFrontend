@@ -47,6 +47,10 @@ const StudentDashboard = () => {
     navigate("/questionnaire")
   }
 
+  const toResults = () => {
+    navigate("/results")
+  }
+
   return (
     <div className="dashboard-container">
       <div className="logout-section">
@@ -73,7 +77,7 @@ const StudentDashboard = () => {
             <BsQuestionSquare size={20}/>
           </CustomButton>
 
-          <CustomButton text={"Checkout Results"} color={"secondary"}>
+          <CustomButton text={"Checkout Results"} color={"secondary"} onClick={toResults}>
             <MdOutlineQuestionAnswer size={20}/>
           </CustomButton>
         </div>
