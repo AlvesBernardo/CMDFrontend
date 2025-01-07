@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import AdminDashboard from "./screens/Dashboard/AdminDashboard.jsx";
 import Questionnaire from "./screens/Questionnaire/Questionnaire.jsx";
 import ManageStudios from "./screens/ManageStudios/ManageStudios.jsx";
+import Results from "./screens/Results/Results.jsx";
+import { Result } from "postcss";
 import StudentList from "./screens/StudentList/StudentList.jsx";
 import AdminRoutes from "./helpers/AdminRoutes.jsx";
 import StudentRoutes from "./helpers/StudentRoutes.jsx";
@@ -18,6 +20,7 @@ function App() {
         <BrowserRouter>
             <ToastContainer />
             <Routes>
+                <Route path="/studentResult" element={<StudentResults />} />
                 <Route path="/" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route element={<ProtectedRoute />}>
