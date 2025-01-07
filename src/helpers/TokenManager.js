@@ -7,9 +7,13 @@ const TokenManager = {
     getRefreshToken: () => localStorage.getItem("refreshToken"),
     setRefreshToken: (token) => localStorage.setItem("refreshToken", token),
 
+    setUserRole: (role) => localStorage.setItem("userRole", role),
+    getUserRole: () => localStorage.getItem("userRole"),
+
     clearTokens: () => {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        localStorage.removeItem("userRole");
     },
 
     isTokenExpired: () => {

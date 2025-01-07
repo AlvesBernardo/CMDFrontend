@@ -9,6 +9,7 @@ import {MdOutlineQuestionAnswer} from "react-icons/md";
 import TokenManager from "../../helpers/TokenManager.js";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import api from "../../helpers/AxiosInstance.js";
 
 const AdminDashboard = () => {
   const [profile, setProfile] = useState({ name: "", email: "" });
@@ -19,9 +20,8 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const userId = 1; // will replace once we have the token
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${userId}`);
-
+        const response = await api.get('api/v1/profile');
+        console.log(response)
         if (!response.ok) {
           throw new Error(`Failed to fetch profile: ${response.statusText}`);
         }
@@ -41,6 +41,18 @@ const AdminDashboard = () => {
     TokenManager.clearTokens();
     toast.error("You just logged out!");
     navigate('/')
+  }
+
+  const toManageStudios = () => {
+    navigate('/manageStudios')
+  }
+
+  const toStudentList = () => {
+    navigate('/studentList')
+  }
+
+  const toResults = () => {
+    navigate('/studentResult')
   }
 
   return (
@@ -65,16 +77,16 @@ const AdminDashboard = () => {
           </div>
         )}
         <div className="buttons-section">
-          <CustomButton text={"Manage Studios"}>
+          <CustomButton text={"Manage Studios"} onClick={toManageStudios}>
             <SiReasonstudios size={20}/>
           </CustomButton>
 
-          <CustomButton text={"Student list"} color={"secondary"}>
+          <CustomButton text={"Student list"} color={"secondary"} onClick={toStudentList}>
             <PiStudent size={20}/>
           </CustomButton>
         </div>
         <div className="second-button-line-section">
-          <CustomButton text={"Results"} color={"secondary"}>
+          <CustomButton text={"Results"} color={"secondary"} onClick={toResults}>
             <MdOutlineQuestionAnswer size={20}/>
           </CustomButton>
         </div>
