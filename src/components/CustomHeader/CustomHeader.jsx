@@ -2,12 +2,17 @@ import {MdOutlineDashboard} from "react-icons/md";
 import CustomButton from "../CustomButton/CustomButton.jsx";
 import React from "react";
 import {useNavigate} from "react-router-dom";
+import TokenManager from "../../helpers/TokenManager.js";
 
 const CustomHeader = ({email, name, profilePicture}) => {
     const navigate = useNavigate();
 
     const toDashboard = () => {
-        navigate("/studentDashboard")
+        if (TokenManager.getUserRole()) {
+            navigate("/adminDashboard")
+        } else {
+            navigate("/studentDashboard")
+        }
     }
 
     return (

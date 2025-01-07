@@ -1,5 +1,5 @@
 import CustomButton from "../../components/CustomButton/CustomButton.jsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TokenManager from "../../helpers/TokenManager.js";
 import api from "../../helpers/AxiosInstance.js";
@@ -49,9 +49,15 @@ function SignIn() {
 
                 TokenManager.setAccessToken(response.data.dtAccessToken);
                 TokenManager.setRefreshToken(response.data.dtRefreshToken);
+                TokenManager.setUserRole(response.data.isAdmin)
 
                 toast.success("Login successful!");
-                navigate("/adminDashboard");
+
+                if (TokenManager.getUserRole()) {
+                    navigate("/adminDashboard");
+                } else {
+                    navigate("/studentDashboard");
+                }
 
             } catch (error) {
                 if (error.response && error.response.data) {
