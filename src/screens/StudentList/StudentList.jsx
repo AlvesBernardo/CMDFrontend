@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import api from "../../helpers/AxiosInstance.js";
 import CustomHeader from "../../components/CustomHeader/CustomHeader.jsx";
 import CustomList from "../../components/CustomList/CustomList.jsx";
@@ -9,22 +8,11 @@ function StudentList() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-    useEffect(() => {
-        fetchStudents();
-    }, []);
-
     const fetchStudents = async () => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8000/api/v1/students");
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const responseData = await response.json();
-            console.log("Fetched Students:", responseData);
-    
-            // Update state with the students' data
-            setStudents(responseData.data);
+            const response = await api.get("/api/v1/students");
+            setStudents(response.data.data);
         } catch (err) {
             console.error("Fetch Error:", err);
             setError("Failed to fetch students. Please try again later.");
@@ -32,20 +20,22 @@ function StudentList() {
             setLoading(false);
         }
     };
-    
-    
+
+    useEffect(() => {
+        fetchStudents();
+    }, []);
+
 
     const handleRemove = async (user_id) => {
         try {
             await api.delete(`/api/v1/students/${user_id}`);
-            setStudents((prevStudents) => prevStudents.filter((student) => student.id !== user_id));
+            await fetchStudents();
             setError("");
         } catch (err) {
             console.error("Error removing student:", err);
             setError("Failed to remove the student. Please try again.");
         }
     };
-
 
     return (
         <div className="manageStudentsContainer p-6">

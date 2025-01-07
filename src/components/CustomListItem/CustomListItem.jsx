@@ -11,35 +11,14 @@ const CustomListItem = ({ item, hasEditButton, hasRemoveButton, onRemove, onEdit
 
     const emailRef = useRef(null);
 
-    const adjustFontSize = () => {
-        const element = emailRef.current;
-        if (!element) return;
-
-        const defaultFontSize = 16; // default size in pixels when scaling is not needed.
-        element.style.fontSize = `${defaultFontSize}px`;
-
-        const parentWidth = element.offsetWidth;
-        const textWidth = element.scrollWidth;
-        const padding = 20;
-
-        if (textWidth > parentWidth - padding) {
-            const scaleFactor = (parentWidth - padding) / textWidth;
-            element.style.fontSize = `${defaultFontSize * scaleFactor}px`;
-        } else {
-            element.style.fontSize = "";
-        }
-    };
-
-    useEffect(() => {
-        adjustFontSize();
-        window.addEventListener("resize", adjustFontSize);
-        return () => window.removeEventListener("resize", adjustFontSize);
-    }, [item.email]);
-
     const handleOpenRemoveModal = () => setIsRemoveModalOpen(true);
     const handleCloseRemoveModal = () => setIsRemoveModalOpen(false);
     const handleConfirmRemove = () => {
-        onRemove(item.id);
+        if (item.idUser) {
+            onRemove(item.idUser);
+        } else {
+            onRemove(item.idStudio);
+        }
         handleCloseRemoveModal();
     };
 
@@ -55,7 +34,7 @@ const CustomListItem = ({ item, hasEditButton, hasRemoveButton, onRemove, onEdit
                 return;
             }
         }
-        onEdit(item.id, editedData);
+        onEdit(item.idStudio, editedData);
         handleCloseEditModal();
     };
 
@@ -71,7 +50,7 @@ const CustomListItem = ({ item, hasEditButton, hasRemoveButton, onRemove, onEdit
         <div className="customListItemContainer flex items-center justify-between p-4 bg-white rounded-lg shadow">
             <div className="dataContainer flex-1">
                 {Object.entries(item).map(([key, value]) => {
-                    if (key === "id" || key === "semester") return null;
+                    if (key === "id" || key === "dtPassword" || key === "dtCreatedAt" || key === "fiType" || key === "idUser") return null;
                     if (key === "studio")
                         return (
                             <p key={key} className="dataItemStudio">
@@ -125,15 +104,15 @@ const CustomListItem = ({ item, hasEditButton, hasRemoveButton, onRemove, onEdit
             >
                 <form className="space-y-4">
                     {Object.entries(editedData).map(([key, value]) => {
-                        if (key === "id") return null;
+                        if (key === "idStudio") return null;
                         return (
                             <div key={key}>
-                                <label htmlFor={`${key}-${item.id}`} className="block text-sm font-medium text-gray-700 capitalize">
+                                <label htmlFor={`${key}-${item.idStudio}`} className="block text-sm font-medium text-gray-700 capitalize">
                                     {key}
                                 </label>
                                 <input
                                     type="text"
-                                    id={`${key}-${item.id}`}
+                                    id={`${key}-${item.idStudio}`}
                                     name={key}
                                     value={editedData[key]}
                                     onChange={handleChange}

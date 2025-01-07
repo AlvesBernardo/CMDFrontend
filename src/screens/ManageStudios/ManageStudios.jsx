@@ -21,8 +21,11 @@ function ManageStudios () {
         setLoading(true);
         try {
             const response = await api.get("api/v1/studios");
-            setList(response.data);
-            setError("");
+            if (response.data.data.length > 0) {
+                setList(response.data.data);
+            } else {
+                setError("No studios found");
+            }
         } catch (err) {
             console.error("Error fetching studios:", err);
             setError("Failed to fetch studios. Please try again later.");
@@ -50,12 +53,12 @@ function ManageStudios () {
         }
         try {
             const newStudio = {
-                dtStudionName: newStudioName,
-                newStudioCapacity: newStudioCapacity
+                dtStudioName: newStudioName,
+                dtStudioCapacity: newStudioCapacity
             };
-            const response = await api.post("/api/v1/studios", newStudio);
-            setList(prevList => [...prevList, response.data]);
+            await api.post("/api/v1/studios/", newStudio);
             setError("");
+            await fetchStudios()
             handleCloseAddModal();
         } catch (err) {
             console.error("Error adding studio:", err);
@@ -67,7 +70,7 @@ function ManageStudios () {
     const handleRemove = async (id) => {
         try {
             await api.delete(`/api/v1/studios/${id}`);
-            setList(prevList => prevList.filter(item => item.id !== id));
+            await fetchStudios();
             setError("");
         } catch (err) {
             console.error("Error removing studio:", err);
@@ -78,11 +81,11 @@ function ManageStudios () {
     const handleEdit = async (id, updatedData) => {
         try {
             const data = {
-                dtStudionName: updatedData.name,
-                dtStudioCapacity: updatedData.capacity
+                dtStudioName: updatedData.dtStudioName,
+                dtStudioCapacity: updatedData.dtCapacity
             }
-            const response = await api.put(`/api/v1/studios/${id}`, data);
-            setList(prevList => prevList.map(item => item.id === id ? response.data : item));
+            await api.patch(`/api/v1/studios/${id}`, data);
+            await fetchStudios()
             setError("");
         } catch (err) {
             console.error("Error editing studio:", err);

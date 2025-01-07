@@ -53,7 +53,7 @@ function SignIn() {
 
                 toast.success("Login successful!");
 
-                if (TokenManager.getUserRole()) {
+                if (TokenManager.getUserRole() === 'true') {
                     navigate("/adminDashboard");
                 } else {
                     navigate("/studentDashboard");

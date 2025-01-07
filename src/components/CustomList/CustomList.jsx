@@ -5,7 +5,7 @@ const CustomList = ({ list = [], hasEditButton, hasRemoveButton, onRemove, onEdi
         <div className="customListContainer space-y-4">
             {list.map((item) => (
                 <CustomListItem
-                    key={item.id}
+                    key={item.idStudio}
                     item={item}
                     hasEditButton={hasEditButton}
                     hasRemoveButton={hasRemoveButton}
