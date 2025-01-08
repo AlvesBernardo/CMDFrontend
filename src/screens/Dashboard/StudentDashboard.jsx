@@ -6,6 +6,8 @@ import {HiLogout} from "react-icons/hi";
 import { BsQuestionSquare } from "react-icons/bs";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 import CustomButton from "../../components/CustomButton/CustomButton.jsx";
+import { HiOutlineAnnotation } from "react-icons/hi";
+import { HiMiniChartBar } from "react-icons/hi2";
 
 const StudentDashboard = () => {
   const [profile, setProfile] = useState({ name: "", email: "" });
@@ -74,11 +76,11 @@ const StudentDashboard = () => {
         )}
         <div className="buttons-section">
           <CustomButton text={"Start Questionnaire"} onClick={toQuestionnaire}>
-            <BsQuestionSquare size={20}/>
+            <HiOutlineAnnotation size={28} className={"pr-2"}/>
           </CustomButton>
 
           <CustomButton text={"Checkout Results"} color={"secondary"} onClick={toResults}>
-            <MdOutlineQuestionAnswer size={20}/>
+            <HiMiniChartBar size={25} className={"pr-2"}/>
           </CustomButton>
         </div>
       </div>
