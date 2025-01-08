@@ -59,7 +59,7 @@ const AdminDashboard = () => {
     <div className="dashboard-container">
       <div className="logout-section">
         <CustomButton onClick={handleLogout} text={"Logout"} color={"error"}>
-          <HiLogout className="hiLogout" />
+          <HiLogout className={"hiLogout"} />
         </CustomButton>
       </div>
       <div className="dashboard-section">
@@ -78,16 +78,16 @@ const AdminDashboard = () => {
         )}
         <div className="buttons-section">
           <CustomButton text={"Manage Studios"} onClick={toManageStudios}>
-            <SiReasonstudios size={20}/>
+            <SiReasonstudios size={27} className={"pr-1"}/>
           </CustomButton>
 
           <CustomButton text={"Student list"} color={"secondary"} onClick={toStudentList}>
-            <PiStudent size={20}/>
+            <PiStudent size={27} className={"pr-1"}/>
           </CustomButton>
         </div>
         <div className="second-button-line-section">
           <CustomButton text={"Results"} color={"secondary"} onClick={toResults}>
-            <MdOutlineQuestionAnswer size={20}/>
+            <MdOutlineQuestionAnswer size={27} className={"pr-1"}/>
           </CustomButton>
         </div>
       </div>
