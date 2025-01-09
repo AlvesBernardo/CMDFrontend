@@ -44,15 +44,9 @@ function StudentList() {
                 name="Mehdi Sadeghi"
                 email="mehdi.sadeghi@student.nhlstenden.com"
             />
-    
+
             <div className="overflow-x-auto mt-6">
-                <div className="grid grid-cols-4 text-center font-semibold p-4 rounded-t-md">
-                    <div>Email</div>
-                    <div>Student Number</div>
-                    <div>Name</div>
-                    <div>Study Year</div>
-                </div>
-    
+
                 <div className="bg-white rounded-b-md">
                     {loading ? (
                         <p className="p-4">Loading students...</p>
@@ -70,9 +64,9 @@ function StudentList() {
             </div>
         </div>
     );
-    
-    
-    
+
+
+
 
 
 }
