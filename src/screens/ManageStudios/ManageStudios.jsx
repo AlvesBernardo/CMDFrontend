@@ -113,15 +113,25 @@ function ManageStudios () {
             ) : error ? (
                 <p className="text-red-500 mb-9">{error}</p>
             ) : (
-                <CustomList
-                    list={list}
-                    hasRemoveButton={true}
-                    hasEditButton={true}
-                    onRemove={handleRemove}
-                    onEdit={handleEdit}
-                />
+                <div className="studioListContainer">
+                    {/* Header Row */}
+                    <div className="studioListHeader grid grid-cols-5 gap-4 font-bold mb-2">
+                        <span>Capacity</span>
+                        <span>ID</span>
+                        <span>Studio Name</span>
+                    
+                    </div>
+                    {/* Custom List */}
+                    <CustomList
+                        list={list}
+                        hasRemoveButton={true}
+                        hasEditButton={true}
+                        onRemove={handleRemove}
+                        onEdit={handleEdit}
+                    />
+                </div>
             )}
-
+    
             <Modal
                 isOpen={isAddModalOpen}
                 onClose={handleCloseAddModal}
@@ -159,6 +169,8 @@ function ManageStudios () {
             </Modal>
         </div>
     );
+    
+    
 
 }
 
