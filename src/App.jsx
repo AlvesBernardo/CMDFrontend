@@ -19,6 +19,7 @@ function App() {
         <BrowserRouter>
             <ToastContainer />
             <Routes>
+            <Route path="/questionnaire" element={<Questionnaire />} />
                 <Route path="/" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route element={<ProtectedRoute />}>
@@ -30,7 +31,7 @@ function App() {
                     </Route>
                     <Route element={<StudentRoutes/>}>
                         <Route path="/studentDashboard" element={<StudentDashboard />} />
-                        <Route path="/questionnaire" element={<Questionnaire />} />
+                       
                         <Route path="/results" element={<Result />} />
                     </Route>
                 </Route>
