@@ -64,8 +64,8 @@ const StudentDashboard = () => {
             <div className="profile-avatar">
               <img src={"../images/pinkBow.jpg"} alt="Profile Avatar" />
             </div>
-            <h2 className="profile-name">{profile.name}</h2>
-            <p className="profile-email">{profile.email}</p>
+            <h2 className="profile-name">{profile.dtFullName}</h2>
+            <p className="profile-email">{profile.dtEmail}</p>
           </div>
         )}
         <div className="buttons-section">
