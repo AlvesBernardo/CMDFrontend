@@ -158,11 +158,7 @@ function Questionnaire() {
 
   return (
     <div className="questionnaire-container" style={{ position: "relative" }}>
-      <CustomHeader
-        profilePicture="nhlLogo.png"
-        name="Mehdi Sadeghi"
-        email="mehdi.sadeghi@student.nhlstenden.com"
-      />
+      <CustomHeader/>
 
       {questions.length > 0 && (
           <>

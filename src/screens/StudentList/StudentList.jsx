@@ -39,11 +39,7 @@ function StudentList() {
 
     return (
         <div className="manageStudentsContainer min-h-screen w-full">
-            <CustomHeader
-                profilePicture="nhlLogo.png"
-                name="Mehdi Sadeghi"
-                email="mehdi.sadeghi@student.nhlstenden.com"
-            />
+            <CustomHeader/>
 
             <div className="overflow-x-auto mt-6">
 

@@ -32,11 +32,7 @@ function StudentResults() {
   return (
     <div className="results-container">
 
-      <CustomHeader
-        profilePicture="nhlLogo.png"
-        name="Mehdi Sadeghi"
-        email="mehdi.sadeghi@student.nhlstenden.com"
-      />
+      <CustomHeader/>
 
       <div className="results-list">
         {results.map((result, index) => (

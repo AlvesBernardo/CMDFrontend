@@ -66,11 +66,7 @@ function ManageStudios() {
 
     return (
         <div className="manageStudiosContainer p-6">
-            <CustomHeader
-                profilePicture="nhlLogo.png"
-                name="Mehdi Sadeghi"
-                email="mehdi.sadeghi@student.nhlstenden.com"
-            />
+            <CustomHeader/>
 
             <div className="dropdown-container">
                 <select

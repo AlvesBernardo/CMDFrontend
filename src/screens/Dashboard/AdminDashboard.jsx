@@ -13,21 +13,18 @@ import api from "../../helpers/AxiosInstance.js";
 
 const AdminDashboard = () => {
   const [profile, setProfile] = useState({ name: "", email: "" });
-  const [error, setError] = useState(null);
+  const [error, setError] = useState();
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await api.get('api/v1/profile');
-        console.log(response)
-        if (!response.ok) {
-          throw new Error(`Failed to fetch profile: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        setProfile(data);
+        const userId = TokenManager.getUserId()
+        const response = await api.get(`/profile/${userId}`);
+        await TokenManager.setUserName(response?.data?.dtFullName)
+        await TokenManager.setUserEmail(response?.data?.dtEmail)
+        setProfile(response.data);
       } catch (err) {
         console.error("Error fetching profile:", err);
         setError(err.message);
@@ -72,8 +69,8 @@ const AdminDashboard = () => {
             <div className="profile-avatar">
               <img src={imgPlaceholder} alt="Profile Avatar" />
             </div>
-            <h2 className="profile-name">{profile.name}</h2>
-            <p className="profile-email">{profile.email}</p>
+            <h2 className="profile-name">{profile.dtFullName}</h2>
+            <p className="profile-email">{profile.dtEmail}</p>
           </div>
         )}
         <div className="buttons-section">

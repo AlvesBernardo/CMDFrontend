@@ -8,6 +8,7 @@ import { MdOutlineQuestionAnswer } from "react-icons/md";
 import CustomButton from "../../components/CustomButton/CustomButton.jsx";
 import { HiOutlineAnnotation } from "react-icons/hi";
 import { HiMiniChartBar } from "react-icons/hi2";
+import api from "../../helpers/AxiosInstance.js";
 
 const StudentDashboard = () => {
   const [profile, setProfile] = useState({ name: "", email: "" });
@@ -18,20 +19,13 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = await TokenManager.getValidAccessToken();
-        const response = await fetch(`http://localhost:8000/profile`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch profile: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        setProfile(data);
-        toast.success(`Welcome back, ${data.name}!`);
+        const userId = TokenManager.getUserId()
+        const response = await api.get(`/profile/${userId}`);
+        await TokenManager.setUserName(response?.data?.dtFullName)
+        await TokenManager.setUserEmail(response?.data?.dtEmail)
+        setProfile(response.data);
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching profile:", err);
         setError(err.message);
       }
     };
