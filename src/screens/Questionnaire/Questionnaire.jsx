@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import "../../css/screens/_questionnaire.scss";
 import CustomHeader from "../../components/CustomHeader/CustomHeader.jsx";
 import CustomButton from "../../components/CustomButton/CustomButton.jsx";
-import {MdOutlineDashboard} from "react-icons/md";
-import {FaLongArrowAltLeft, FaLongArrowAltRight} from "react-icons/fa";
-import {useNavigate} from "react-router-dom";
+import { MdOutlineDashboard } from "react-icons/md";
+import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function DraggableItem({ text, onDragStart, isDropped }) {
   const itemRef = useRef(null);
@@ -13,21 +13,28 @@ function DraggableItem({ text, onDragStart, isDropped }) {
     const element = itemRef.current;
     if (!element) return;
 
-    const parentWidth = element.offsetWidth; // Width of the container
-    const textWidth = element.scrollWidth; // Actual width of the text content
-    const padding = 20; // 10px padding on each side
+    element.style.fontSize = "100px";
 
-    if (textWidth > parentWidth - padding) {
-      const scaleFactor = (parentWidth - padding) / textWidth;
-      element.style.fontSize = `${parseFloat(window.getComputedStyle(element).fontSize) * scaleFactor}px`;
-    } else {
-      element.style.fontSize = "";
+    const parentWidth = element.offsetWidth;
+    const parentHeight = element.offsetHeight; 
+    let textWidth = element.scrollWidth;
+    let textHeight = element.scrollHeight;
+
+    while (
+      (textWidth > parentWidth || textHeight > parentHeight) &&
+      parseFloat(element.style.fontSize) > 1
+    ) {
+      const currentFontSize = parseFloat(element.style.fontSize);
+      element.style.fontSize = `${currentFontSize - 1}px`;
+      textWidth = element.scrollWidth;
+      textHeight = element.scrollHeight;
     }
   };
 
   useEffect(() => {
     adjustFontSize();
-    window.addEventListener("resize", adjustFontSize); // Recalculate on window resize
+    window.addEventListener("resize", adjustFontSize);
+
     return () => window.removeEventListener("resize", adjustFontSize);
   }, [text]);
 
@@ -35,7 +42,7 @@ function DraggableItem({ text, onDragStart, isDropped }) {
     <div
       ref={itemRef}
       className={`draggable-item ${isDropped ? "dropped-item" : ""}`}
-      draggable={!isDropped} // Disable dragging if it's in a choice
+      draggable={!isDropped}
       onDragStart={!isDropped ? onDragStart : undefined}
     >
       {text}
@@ -136,7 +143,7 @@ function Questionnaire() {
           <div className="dropped-item">
             <DraggableItem
               text={choices[choice]}
-              isDropped={true} // Mark it as dropped
+              isDropped={true}
             />
             <button
               className="clear-choice"
@@ -153,20 +160,20 @@ function Questionnaire() {
   };
 
   const toDashboard = () => {
-    navigate("/studentDashboard")
-  }
+    navigate("/studentDashboard");
+  };
 
   return (
     <div className="questionnaire-container" style={{ position: "relative" }}>
       <CustomHeader/>
 
       {questions.length > 0 && (
-          <>
-            <div className="question-box">
-              <h2>{questions[currentStep].question}</h2>
-            </div>
+        <>
+          <div className="question-box">
+            <h2>{questions[currentStep].question}</h2>
+          </div>
 
-            {questions[currentStep].type === "multiple-choice" ? (
+          {questions[currentStep].type === "multiple-choice" ? (
             <div className="drag-and-drop-container">
               <div className="options">
                 <h3>Available Options</h3>
@@ -199,16 +206,16 @@ function Questionnaire() {
             </p>
           </div>
           <div className="navigation-buttons">
-            <CustomButton text={"Previous"} color={"secondary"} width={'40%'}>
+            <CustomButton text={"Previous"} color={"secondary"} width={"40%"}>
               <FaLongArrowAltLeft />
             </CustomButton>
 
             {currentStep < questions.length - 1 ? (
-                <CustomButton text={"Next"} color={"primary"} >
-                  <FaLongArrowAltRight />
-                </CustomButton>
+              <CustomButton text={"Next"} color={"primary"}>
+                <FaLongArrowAltRight />
+              </CustomButton>
             ) : (
-                <CustomButton text={"Submit"} color={"primary"} onClick={handleSubmit}/>
+              <CustomButton text={"Submit"} color={"primary"} onClick={handleSubmit} />
             )}
           </div>
         </>
