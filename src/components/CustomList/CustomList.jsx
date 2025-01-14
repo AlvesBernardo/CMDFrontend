@@ -1,6 +1,6 @@
 import CustomListItem from "../CustomListItem/CustomListItem.jsx";
 
-const CustomList = ({ list = [], hasEditButton, hasRemoveButton, onRemove, onEdit }) => {
+const CustomList = ({ list = [], hasEditButton, hasRemoveButton, onRemove, onEdit, onToggleOpenClose }) => {
     return (
         <div className="customListContainer space-y-4">
             {list.map((item) => (
@@ -11,9 +11,11 @@ const CustomList = ({ list = [], hasEditButton, hasRemoveButton, onRemove, onEdi
                     hasRemoveButton={hasRemoveButton}
                     onRemove={onRemove}
                     onEdit={onEdit}
+                    onToggleOpenClose={onToggleOpenClose}
                 />
             ))}
         </div>
     );
 };
+
 export default CustomList;
