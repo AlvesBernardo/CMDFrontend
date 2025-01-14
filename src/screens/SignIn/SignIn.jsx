@@ -47,9 +47,11 @@ function SignIn() {
             try {
                 const response = await api.post("/login/user", data);
 
+                console.log(response)
                 TokenManager.setAccessToken(response.data.dtAccessToken);
                 TokenManager.setRefreshToken(response.data.dtRefreshToken);
                 TokenManager.setUserRole(response.data.isAdmin)
+                TokenManager.setUserId(response.data.id)
 
                 toast.success("Login successful!");
 

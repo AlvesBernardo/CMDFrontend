@@ -1,18 +1,35 @@
 .manageStudiosContainer {
-  width: 100%;
+  width: fit;
   min-height: 100vh;
   background-color: #e4ecf4;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding-bottom: 100px;
-  gap: 50px;
+}
 
-  .manageStudiosButtonContainer {
-    width: 100%;
-    display: flex;
-    justify-content: end;
-    padding-right: 50px;
-  }
+.manageStudiosButtonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  padding-right: 50px;
+}
+
+.studioListContainer {
+  width: 100%;
+}
+
+.studioListHeader, .customListItem {
+  padding: 10px 0;
+  width: 100%;
+}
+
+.studioListHeader {
+  font-weight: bold;
+  text-align: center;
+  margin-left: 7.25%;
+  
+}
+
+.customListItem {
+  text-align: center;
 }

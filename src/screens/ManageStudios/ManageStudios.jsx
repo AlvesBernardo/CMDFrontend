@@ -101,11 +101,7 @@ function ManageStudios() {
 
     return (
         <div className="manageStudiosContainer p-6">
-            <CustomHeader
-                profilePicture="nhlLogo.png"
-                name="Mehdi Sadeghi"
-                email="mehdi.sadeghi@student.nhlstenden.com"
-            />
+            <CustomHeader/>
             <div className="manageStudiosButtonContainer my-4">
                 <CustomButton
                     color="primary"
