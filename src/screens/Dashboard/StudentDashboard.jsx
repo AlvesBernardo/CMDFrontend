@@ -6,6 +6,9 @@ import {HiLogout} from "react-icons/hi";
 import { BsQuestionSquare } from "react-icons/bs";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 import CustomButton from "../../components/CustomButton/CustomButton.jsx";
+import { HiOutlineAnnotation } from "react-icons/hi";
+import { HiMiniChartBar } from "react-icons/hi2";
+import api from "../../helpers/AxiosInstance.js";
 
 const StudentDashboard = () => {
   const [profile, setProfile] = useState({ name: "", email: "" });
@@ -16,20 +19,13 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = await TokenManager.getValidAccessToken();
-        const response = await fetch(`http://localhost:8000/profile`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch profile: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        setProfile(data);
-        toast.success(`Welcome back, ${data.name}!`);
+        const userId = TokenManager.getUserId()
+        const response = await api.get(`/profile/${userId}`);
+        await TokenManager.setUserName(response?.data?.dtFullName)
+        await TokenManager.setUserEmail(response?.data?.dtEmail)
+        setProfile(response.data);
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching profile:", err);
         setError(err.message);
       }
     };
@@ -68,17 +64,17 @@ const StudentDashboard = () => {
             <div className="profile-avatar">
               <img src={"../images/pinkBow.jpg"} alt="Profile Avatar" />
             </div>
-            <h2 className="profile-name">{profile.name}</h2>
-            <p className="profile-email">{profile.email}</p>
+            <h2 className="profile-name">{profile.dtFullName}</h2>
+            <p className="profile-email">{profile.dtEmail}</p>
           </div>
         )}
         <div className="buttons-section">
           <CustomButton text={"Start Questionnaire"} onClick={toQuestionnaire}>
-            <BsQuestionSquare size={20}/>
+            <HiOutlineAnnotation size={28} className={"pr-2"}/>
           </CustomButton>
 
           <CustomButton text={"Checkout Results"} color={"secondary"} onClick={toResults}>
-            <MdOutlineQuestionAnswer size={20}/>
+            <HiMiniChartBar size={25} className={"pr-2"}/>
           </CustomButton>
         </div>
       </div>

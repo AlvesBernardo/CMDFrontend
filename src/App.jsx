@@ -12,7 +12,6 @@ import ManageStudios from "./screens/ManageStudios/ManageStudios.jsx";
 import StudentList from "./screens/StudentList/StudentList.jsx";
 import AdminRoutes from "./helpers/AdminRoutes.jsx";
 import StudentRoutes from "./helpers/StudentRoutes.jsx";
-import {Result} from "postcss";
 
 function App() {
     return (
@@ -31,7 +30,7 @@ function App() {
                     <Route element={<StudentRoutes/>}>
                         <Route path="/studentDashboard" element={<StudentDashboard />} />
                         <Route path="/questionnaire" element={<Questionnaire />} />
-                        <Route path="/results" element={<Result />} />
+                        <Route path="/results" element={<StudentResults />} />
                     </Route>
                 </Route>
             </Routes>

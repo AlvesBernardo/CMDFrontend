@@ -38,26 +38,31 @@ function StudentList() {
     };
 
     return (
-        <div className="manageStudentsContainer p-6">
-            <CustomHeader
-                profilePicture="nhlLogo.png"
-                name="Mehdi Sadeghi"
-                email="mehdi.sadeghi@student.nhlstenden.com"
-            />
-            {loading ? (
-                <p>Loading students...</p>
-            ) : error ? (
-                <p className="text-red-500">{error}</p>
-            ) : (
-                <CustomList
-                    list={students}
-                    hasRemoveButton={true}
-                    hasEditButton={false}
-                    onRemove={handleRemove}
-                />
-            )}
+        <div className="manageStudentsContainer min-h-screen w-full">
+            <CustomHeader/>
+
+            <div className="overflow-x-auto mt-6">
+
+                <div className="bg-white rounded-b-md">
+                    {loading ? (
+                        <p className="p-4">Loading students...</p>
+                    ) : error ? (
+                        <p className="text-red-500 p-4">{error}</p>
+                    ) : (
+                        <CustomList
+                            list={students}
+                            hasRemoveButton={true}
+                            hasEditButton={false}
+                            onRemove={handleRemove}
+                        />
+                    )}
+                </div>
+            </div>
         </div>
     );
+
+
+
 
 
 }

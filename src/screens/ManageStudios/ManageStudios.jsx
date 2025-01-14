@@ -95,11 +95,7 @@ function ManageStudios () {
 
     return (
         <div className="manageStudiosContainer p-6">
-            <CustomHeader
-                profilePicture="nhlLogo.png"
-                name="Mehdi Sadeghi"
-                email="mehdi.sadeghi@student.nhlstenden.com"
-            />
+            <CustomHeader/>
             <div className="manageStudiosButtonContainer my-4">
                 <CustomButton
                     color="primary"
@@ -113,13 +109,23 @@ function ManageStudios () {
             ) : error ? (
                 <p className="text-red-500 mb-9">{error}</p>
             ) : (
-                <CustomList
-                    list={list}
-                    hasRemoveButton={true}
-                    hasEditButton={true}
-                    onRemove={handleRemove}
-                    onEdit={handleEdit}
-                />
+                <div className="studioListContainer">
+                    {/* Header Row */}
+                    <div className="studioListHeader grid grid-cols-5 gap-4 font-bold mb-2">
+                        <span>Capacity</span>
+                        <span>ID</span>
+                        <span>Studio Name</span>
+
+                    </div>
+                    {/* Custom List */}
+                    <CustomList
+                        list={list}
+                        hasRemoveButton={true}
+                        hasEditButton={true}
+                        onRemove={handleRemove}
+                        onEdit={handleEdit}
+                    />
+                </div>
             )}
 
             <Modal
@@ -159,7 +165,6 @@ function ManageStudios () {
             </Modal>
         </div>
     );
-
 }
 
 export default ManageStudios
