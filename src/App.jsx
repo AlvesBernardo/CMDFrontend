@@ -12,6 +12,7 @@ import ManageStudios from "./screens/ManageStudios/ManageStudios.jsx";
 import StudentList from "./screens/StudentList/StudentList.jsx";
 import AdminRoutes from "./helpers/AdminRoutes.jsx";
 import StudentRoutes from "./helpers/StudentRoutes.jsx";
+import AdminResults from "./screens/AdminResults/AdminResults.jsx";
 
 function App() {
     return (
@@ -25,12 +26,12 @@ function App() {
                         <Route path="/adminDashboard" element={<AdminDashboard />} />
                         <Route path="/manageStudios" element={<ManageStudios />} />
                         <Route path="/studentList" element={<StudentList />} />
-                        <Route path="/studentResult" element={<StudentResults />} />
+                        <Route path="/adminResults" element={<AdminResults />} />
                     </Route>
                     <Route element={<StudentRoutes/>}>
                         <Route path="/studentDashboard" element={<StudentDashboard />} />
                         <Route path="/questionnaire" element={<Questionnaire />} />
-                        <Route path="/results" element={<StudentResults />} />
+                        <Route path="/studentresults" element={<StudentResults />} />
                     </Route>
                 </Route>
             </Routes>

@@ -96,7 +96,7 @@ function ManageStudios () {
     return (
         <div className="manageStudiosContainer p-6">
             <CustomHeader/>
-            <div className="manageStudiosButtonContainer my-4">
+            <div className="manageStudiosButtonContainer">
                 <CustomButton
                     color="primary"
                     text="Add new studio"

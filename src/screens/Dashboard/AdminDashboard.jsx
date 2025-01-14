@@ -49,7 +49,7 @@ const AdminDashboard = () => {
   }
 
   const toResults = () => {
-    navigate('/studentResult')
+    navigate('/adminResults')
   }
 
   return (
