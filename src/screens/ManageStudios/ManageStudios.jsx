@@ -1,19 +1,15 @@
 import CustomList from "../../components/CustomList/CustomList.jsx";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import CustomHeader from "../../components/CustomHeader/CustomHeader.jsx";
 import CustomButton from "../../components/CustomButton/CustomButton.jsx";
 import Modal from "../../components/CustomModal/CustomModal.jsx";
 import api from "../../helpers/AxiosInstance.js";
 
-function ManageStudios () {
-
+function ManageStudios() {
     const [list, setList] = useState([]);
-
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-
     const [newStudioName, setNewStudioName] = useState("");
     const [newStudioCapacity, setNewStudioCapacity] = useState("");
-
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -21,11 +17,9 @@ function ManageStudios () {
         setLoading(true);
         try {
             const response = await api.get("api/v1/studios");
-            if (response.data.data.length > 0) {
-                setList(response.data.data);
-            } else {
-                setError("No studios found");
-            }
+            console.log("Fetched studios:", response.data.data);
+            setList(response.data.data);
+            setError("");
         } catch (err) {
             console.error("Error fetching studios:", err);
             setError("Failed to fetch studios. Please try again later.");
@@ -39,7 +33,6 @@ function ManageStudios () {
     }, []);
 
     const handleOpenAddModal = () => setIsAddModalOpen(true);
-
     const handleCloseAddModal = () => {
         setIsAddModalOpen(false);
         setNewStudioName("");
@@ -58,11 +51,10 @@ function ManageStudios () {
             };
             await api.post("/api/v1/studios/", newStudio);
             setError("");
-            await fetchStudios()
+            await fetchStudios();
             handleCloseAddModal();
         } catch (err) {
             console.error("Error adding studio:", err);
-            handleCloseAddModal();
             setError("Failed to add the studio. Please try again.");
         }
     };
@@ -82,14 +74,28 @@ function ManageStudios () {
         try {
             const data = {
                 dtStudioName: updatedData.dtStudioName,
-                dtStudioCapacity: updatedData.dtCapacity
-            }
+                dtStudioCapacity: updatedData.dtStudioCapacity
+            };
             await api.patch(`/api/v1/studios/${id}`, data);
-            await fetchStudios()
+            await fetchStudios();
             setError("");
         } catch (err) {
             console.error("Error editing studio:", err);
             setError("Failed to edit the studio. Please try again.");
+        }
+    };
+
+    const handleToggleOpenClose = async (studio) => {
+        try {
+            const updatedStatus = !studio.dtIsBookable;
+            console.log("Toggling status for studio:", studio);
+            await api.put(`/api/v1/studios/open_close/${studio.idStudio}`, {
+                dtIsBookable: updatedStatus
+            });
+            await fetchStudios();
+        } catch (err) {
+            console.error("Error toggling open/close status:", err);
+            setError("Failed to toggle the studio status. Please try again.");
         }
     };
 
@@ -109,23 +115,14 @@ function ManageStudios () {
             ) : error ? (
                 <p className="text-red-500 mb-9">{error}</p>
             ) : (
-                <div className="studioListContainer">
-                    {/* Header Row */}
-                    <div className="studioListHeader grid grid-cols-5 gap-4 font-bold mb-2">
-                        <span>Capacity</span>
-                        <span>ID</span>
-                        <span>Studio Name</span>
-
-                    </div>
-                    {/* Custom List */}
-                    <CustomList
-                        list={list}
-                        hasRemoveButton={true}
-                        hasEditButton={true}
-                        onRemove={handleRemove}
-                        onEdit={handleEdit}
-                    />
-                </div>
+                <CustomList
+                    list={list}
+                    hasRemoveButton={true}
+                    hasEditButton={true}
+                    onRemove={handleRemove}
+                    onEdit={handleEdit}
+                    onToggleOpenClose={handleToggleOpenClose}
+                />
             )}
 
             <Modal
@@ -153,7 +150,7 @@ function ManageStudios () {
                             Capacity
                         </label>
                         <input
-                            type="text"
+                            type="number"
                             id="new-studio-capacity"
                             value={newStudioCapacity}
                             onChange={(e) => setNewStudioCapacity(e.target.value)}
@@ -167,4 +164,4 @@ function ManageStudios () {
     );
 }
 
-export default ManageStudios
+export default ManageStudios;

@@ -1,17 +1,7 @@
 import React from "react";
 import CustomListItem from "../CustomListItem/CustomListItem.jsx";
 
-const CustomList = ({ list = [], hasEditButton, hasRemoveButton, onRemove, onEdit }) => {
-    if (!list.length) {
-        return <p>No items to display</p>;
-    }
-
-    const hiddenKeys = ["id", "dtPassword", "dtCreatedAt", "fiType", "idUser", "idStudio"];
-
-    const columns = Object.keys(list[0]).filter(
-        (key) => !hiddenKeys.includes(key)
-    );
-
+const CustomList = ({ list = [], hasEditButton, hasRemoveButton, onRemove, onEdit, onToggleOpenClose }) => {
     return (
         <div className="customListContainer">
             <div className="customListHeaderContainer">
@@ -36,6 +26,7 @@ const CustomList = ({ list = [], hasEditButton, hasRemoveButton, onRemove, onEdi
                     hasRemoveButton={hasRemoveButton}
                     onRemove={onRemove}
                     onEdit={onEdit}
+                    onToggleOpenClose={onToggleOpenClose}
                 />
             ))}
         </div>
