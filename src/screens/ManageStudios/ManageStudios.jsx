@@ -165,9 +165,6 @@ function ManageStudios () {
             </Modal>
         </div>
     );
-
-
-
 }
 
 export default ManageStudios
