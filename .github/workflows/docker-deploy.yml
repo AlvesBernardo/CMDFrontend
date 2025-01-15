@@ -3,16 +3,41 @@ name: Deploy React App
 on:
   push:
     branches:
-      - main
+      - main # Trigger on push to the main branch
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+    # Step 1: Checkout the code
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Build and Run Docker Image
+    # Step 2: Set up Node.js (for running npm commands)
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Specify the Node.js version you want to use
+
+    # Step 3: Install dependencies
+    - name: Install Dependencies
       run: |
-        docker-compose -f docker-compose.yml up --build -d
+        npm install
+
+    # Step 4: Build the React app
+    - name: Build the React App
+      run: |
+        npm run build  # This will generate the production-ready files in the 'build' folder
+
+    # Optional: Deploy to GitHub Pages (or any other platform)
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages  # The target branch for deployment
+        folder: build  # The folder where the production build is located
+
+    # Optional: Clean up build files
+    - name: Clean up build files
+      run: |
+        rm -rf build # Clean up the build folder if desired
