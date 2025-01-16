@@ -1,17 +1,17 @@
-  import { defineConfig } from "vite";
-  import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-  export default defineConfig({
-    base: "/CMDFrontend/",
-    plugins: [react()],
-    preview: {
-      port: 8080,
-      strictPort: true,
-    },
-    server: {
-      port: 8080,
-      strictPort: true,
-      host: true,
-      origin: "http://0.0.0.0:8080",
-    },
-  });
+export default defineConfig(({ command }) => ({
+  base: command === "serve" ? "/" : "/CMDFrontend/",
+  plugins: [react()],
+  preview: {
+    port: 8080,
+    strictPort: true,
+  },
+  server: {
+    port: 8080,
+    strictPort: true,
+    host: true,
+    origin: "http://0.0.0.0:8080",
+  },
+}));
